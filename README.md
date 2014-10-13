@@ -7,7 +7,7 @@ Mode d'emploi
 
 téléchargement (nécessite git)
 
-git clone https://github.com/phelluy/SCHNAPS.git
+git clone https://github.com/pgerhard/SCHNAPS.git
 
 se placer dans le dossier SCHNAPS
 
