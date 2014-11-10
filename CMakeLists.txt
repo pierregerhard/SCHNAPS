@@ -19,12 +19,14 @@ src/interpolation.h
 src/macromesh.h
 src/model.h
 src/euler.h
+src/stvenantlin.h
 src/field.c
 src/geometry.c
 src/interpolation.c
 src/macromesh.c
 src/model.c
 src/euler.c
+src/stvenantlin.c
 )
 
 #schnaps library
