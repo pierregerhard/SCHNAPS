@@ -18,15 +18,12 @@ src/h20phi.h
 src/interpolation.h
 src/macromesh.h
 src/model.h
-src/euler.h
 src/stvenantlin.h
-src/ondes.h
 src/field.c
 src/geometry.c
 src/interpolation.c
 src/macromesh.c
 src/model.c
-src/euler.c
 src/stvenantlin.c
 )
 
@@ -73,14 +70,6 @@ add_executable(
 target_link_libraries(testmodel _schnaps m pthread)
 
 add_executable(
-  testeuler
-  test/test.h
-  test/testeuler.c
-)
-target_link_libraries(testeuler _schnaps m pthread)
-add_test(testeuler testeuler)
-
-add_executable(
   teststvenantlin
   test/test.h
   test/teststvenantlin.c
@@ -105,16 +94,6 @@ add_executable(
 )
 target_link_libraries(testfielddg _schnaps m pthread)
 add_test(testfielddg testfielddg)
-
-add_test(testwaves testwaves)
-add_executable(
-  testwaves
-  test/test.h
-  test/testwaves.c
-)
-target_link_libraries(testwaves _schnaps m pthread)
-add_test(testwaves testwaves)
-
 
 add_test(testfieldrk2 testfieldrk2)
 add_executable(

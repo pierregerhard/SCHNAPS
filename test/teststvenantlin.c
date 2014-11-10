@@ -2,7 +2,7 @@
 //#include "geometry.h"
 //#include "interpolation.h"
 #include "test.h"
-#include "model.h"
+#include "stvenantlin.h"
 #include "field.h"
 
 #include <stdio.h>
