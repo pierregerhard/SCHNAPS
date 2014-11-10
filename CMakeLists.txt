@@ -23,6 +23,8 @@ src/geometry.c
 src/interpolation.c
 src/macromesh.c
 src/model.c
+src/shallow.c
+src/shallow.h
 )
 
 #schnaps library
