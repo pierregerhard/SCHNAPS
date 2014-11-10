@@ -20,6 +20,7 @@ src/macromesh.h
 src/model.h
 src/euler.h
 src/stvenantlin.h
+src/ondes.h
 src/field.c
 src/geometry.c
 src/interpolation.c
