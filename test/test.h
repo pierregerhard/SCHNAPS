@@ -27,5 +27,7 @@ int TestFieldRK2_2D_SubCell(void);
 
 int TestEuleur(void);
 
+int TestWaves(void);
+
 
 #endif

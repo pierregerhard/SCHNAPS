@@ -11,8 +11,21 @@
 
 
 int main(void) {
+  
+  // unit tests
+    
+  int resu=TestWaves();
+	 
+
+  if (resu) printf("Model test OK !\n");
+  else printf("Model test failed !\n");
+
+  return !resu;
+} 
 
 
+
+int TestWaves (void){
   Field f;
   f.model.m=3; // only one conservative variable
   f.model.NumFlux=WavesNumFlux2d;
