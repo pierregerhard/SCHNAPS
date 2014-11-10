@@ -43,7 +43,12 @@ void WavesNumFlux2d(double wL[],double wR[],double* vnorm,double* flux){
    double vnp = vn>0 ? vn : 0;
    double vnm = vn-vnp;
 
-   flux[0] = vnp * wL[0] + vnm * wR[0];
+   flux[0] = 0;
+   flux[1] = 0;
+   flux[2] = 0;
+   
+   
+   //flux[0] =  vnp * wL[0] + vnm * wR[0];
    /* if (fabs(vnorm[2])>1e-6){ */
    /*   printf("vnds %lf %lf %lf \n",vnorm[0],vnorm[1],vnorm[2]); */
    /* } */
@@ -104,7 +109,11 @@ void WavesImposedData2d(double x[3],double t,double w[]){
 
   double xx = vx - t;
 
-  w[0]=cos(xx);
+  w[0]=1;
+  w[1]=1;
+  w[2]=1;
+  
+  //w[0]=cos(xx);
 };
 
 void TestWavesBoundaryFlux(double x[3],double t,double wL[],double* vnorm,

@@ -1,10 +1,10 @@
+
 #include "schnaps.h"
 #include <stdio.h>
 #include <assert.h>
 
 
 int main(void) {
-
 
   Field f;
   f.model.m=1; // only one conservative variable
@@ -49,7 +49,7 @@ int main(void) {
   // apply the DG scheme
   // time integration by RK2 scheme 
   // up to final time = 1.
-  RK2(&f,1.);
+  RK2(&f,1.0);
  
   // save the results and the error
   PlotField(0,(1==0),&f,"dgvisu.msh");
@@ -60,6 +60,6 @@ int main(void) {
   printf("erreur L2=%f\n",dd);
   return 0;
 
-};
+}
 
 

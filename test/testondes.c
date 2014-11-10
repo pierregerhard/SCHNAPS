@@ -3,7 +3,7 @@
 //#include "interpolation.h"
 #include "test.h"
 #include "ondes.h"
-//#include "field.h"
+#include "field.h"
 
 #include <stdio.h>
 #include <math.h>
