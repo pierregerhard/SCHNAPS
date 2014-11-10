@@ -78,6 +78,7 @@ add_executable(
   test/testeuler.c
 )
 target_link_libraries(testeuler _schnaps m pthread)
+add_test(testeuler testeuler)
 
 add_test(testfield testfield)
 add_executable(
