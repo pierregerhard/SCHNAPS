@@ -1,4 +1,4 @@
-#include "model.h"
+#include "ondes.h"
 #include <math.h>
 #include <stdio.h>
 #include <assert.h>
@@ -61,14 +61,14 @@ void WavesNumFlux2d(double wL[],double wR[],double* vnorm,double* flux){
 
 void WavesBoundaryFlux(double x[3],double t,double wL[],double* vnorm,
 			   double* flux){
-  double wR[1];
+  double wR[3];
   WavesImposedData(x,t,wR);
   WavesNumFlux(wL,wR,vnorm,flux);
 };
 
 void WavesBoundaryFlux2d(double x[3],double t,double wL[],double* vnorm,
 			   double* flux){
-  double wR[1];
+  double wR[3];
   WavesImposedData2d(x,t,wR);
   WavesNumFlux2d(wL,wR,vnorm,flux);
 };
@@ -118,14 +118,14 @@ void WavesImposedData2d(double x[3],double t,double w[]){
 
 void TestWavesBoundaryFlux(double x[3],double t,double wL[],double* vnorm,
 			   double* flux){
-  double wR[1];
+  double wR[3];
   TestWavesImposedData(x,t,wR);
   WavesNumFlux(wL,wR,vnorm,flux);
 };
 
 void TestWavesBoundaryFlux2d(double x[3],double t,double wL[],double* vnorm,
 			   double* flux){
-  double wR[1];
+  double wR[3];
   TestWavesImposedData2d(x,t,wR);
   WavesNumFlux2d(wL,wR,vnorm,flux);
 };

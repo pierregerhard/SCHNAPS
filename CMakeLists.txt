@@ -18,8 +18,6 @@ src/h20phi.h
 src/interpolation.h
 src/macromesh.h
 src/model.h
-src/euler.h
-src/stvenantlin.h
 src/ondes.h
 src/ondes.c
 src/field.c
@@ -27,10 +25,6 @@ src/geometry.c
 src/interpolation.c
 src/macromesh.c
 src/model.c
-src/shallow.c
-src/shallow.h
-src/euler.c
-src/stvenantlin.c
 )
 
 #schnaps library
@@ -75,14 +69,6 @@ add_executable(
 )
 target_link_libraries(testmodel _schnaps m pthread)
 
-add_executable(
-  testeuler
-  test/test.h
-  test/testeuler.c
-)
-target_link_libraries(testeuler _schnaps m pthread)
-add_test(testeuler testeuler)
-
 add_test(testfield testfield)
 add_executable(
   testfield
@@ -108,7 +94,7 @@ add_executable(
   test/testondes.c
 )
 target_link_libraries(testwaves _schnaps m pthread)
-add_test(testwaves testwaves)
+
 
 
 add_test(testfieldrk2 testfieldrk2)
