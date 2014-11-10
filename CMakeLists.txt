@@ -2,14 +2,24 @@ cmake_minimum_required(VERSION 2.8)
 
 project(schnaps)
 
+#set(CMAKE_C_COMPILER "tau_cc.sh")
+#set(CMAKE_C_FLAGS "-optRevert -optTauSelectFile=select.tau -std=c99 -fopenmp -Ofast")
 #set(CMAKE_C_COMPILER "/opt/local/bin/gcc-mp-4.8")
-set(CMAKE_C_FLAGS "-std=c99 -D_REENTRANT -O")
+
+set(CMAKE_C_FLAGS "-std=c99 -D_REENTRANT -O3")
+find_package(OpenMP)
+if (OPENMP_FOUND)
+    set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
+    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+endif()
+
+
+
 include_directories(src)
 
 enable_testing()
 
-list(APPEND
-source_files
+list(APPEND source_files
 src/field.h
 src/schnaps.h
 src/geometry.h
@@ -18,7 +28,6 @@ src/h20phi.h
 src/interpolation.h
 src/macromesh.h
 src/model.h
-src/euler.h
 src/stvenantlin.h
 src/ondes.h
 src/field.c
@@ -27,6 +36,8 @@ src/interpolation.c
 src/macromesh.c
 src/model.c
 src/euler.c
+src/shallow.c
+src/shallow.h
 src/stvenantlin.c
 )
 
@@ -72,13 +83,6 @@ add_executable(
 )
 target_link_libraries(testmodel _schnaps m pthread)
 
-add_executable(
-  testeuler
-  test/test.h
-  test/testeuler.c
-)
-target_link_libraries(testeuler _schnaps m pthread)
-add_test(testeuler testeuler)
 
 add_test(testfield testfield)
 add_executable(
@@ -136,6 +140,10 @@ target_link_libraries(testsubcelldgvol _schnaps m pthread)
 add_test(testsubcelldgvol testsubcelldgvol)
 
 add_test(testfieldrk2-2d-subcell testfieldrk2-2d-subcell)
+
+
+
+
 add_executable(
   testfieldrk2-2d-subcell
   test/test.h
@@ -143,3 +151,16 @@ add_executable(
 )
 target_link_libraries(testfieldrk2-2d-subcell _schnaps m pthread)
 add_test(testfieldrk2-2d-subcell testfieldrk2-2d-subcell)
+
+add_executable(
+  testshallow 
+  test/testshallow.h                                                         
+  test/testshallow.c                                      
+)                                                                     
+
+target_link_libraries( testshallow _schnaps m pthread )
+add_test( testshallow testshallow )        
+    
+    
+    
+    
