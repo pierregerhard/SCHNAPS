@@ -21,18 +21,16 @@ src/model.h
 src/euler.h
 src/stvenantlin.h
 src/ondes.h
+src/ondes.c
 src/field.c
 src/geometry.c
 src/interpolation.c
 src/macromesh.c
 src/model.c
-<<<<<<< HEAD
 src/shallow.c
 src/shallow.h
-=======
 src/euler.c
 src/stvenantlin.c
->>>>>>> cdc3661872274d5e0ff91e15d04a410ba38a28f4
 )
 
 #schnaps library
