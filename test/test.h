@@ -29,6 +29,7 @@ int TestStVenantLin(void);
 
 int TestWaves(void);
 
+int TestEuler(void);
 
 
 #endif
