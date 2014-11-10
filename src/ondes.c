@@ -22,9 +22,9 @@ const double waves_v2d[] = {
 void WavesNumFlux(double wL[],double wR[],double* vnorm,double* flux){
   
   double vn =
-    transport_v[0] * vnorm[0] +
-    transport_v[1] * vnorm[1] +
-    transport_v[2] * vnorm[2];
+    waves_v[0] * vnorm[0] +
+    waves_v[1] * vnorm[1] +
+    waves_v[2] * vnorm[2];
 
    double vnp = vn>0 ? vn : 0;
    double vnm = vn-vnp;
@@ -36,9 +36,9 @@ void WavesNumFlux(double wL[],double wR[],double* vnorm,double* flux){
 void WavesNumFlux2d(double wL[],double wR[],double* vnorm,double* flux){
   
   double vn =
-    transport_v2d[0] * vnorm[0] +
-    transport_v2d[1] * vnorm[1] +
-    transport_v2d[2] * vnorm[2];
+    waves_v2d[0] * vnorm[0] +
+    waves_v2d[1] * vnorm[1] +
+    waves_v2d[2] * vnorm[2];
 
    double vnp = vn>0 ? vn : 0;
    double vnm = vn-vnp;
@@ -57,28 +57,28 @@ void WavesNumFlux2d(double wL[],double wR[],double* vnorm,double* flux){
 void WavesBoundaryFlux(double x[3],double t,double wL[],double* vnorm,
 			   double* flux){
   double wR[1];
-  TransportImposedData(x,t,wR);
-  TransportNumFlux(wL,wR,vnorm,flux);
+  WavesImposedData(x,t,wR);
+  WavesNumFlux(wL,wR,vnorm,flux);
 };
 
 void WavesBoundaryFlux2d(double x[3],double t,double wL[],double* vnorm,
 			   double* flux){
   double wR[1];
-  TransportImposedData2d(x,t,wR);
-  TransportNumFlux2d(wL,wR,vnorm,flux);
+  WavesImposedData2d(x,t,wR);
+  WavesNumFlux2d(wL,wR,vnorm,flux);
 };
 
 void WavesInitData(double x[3],double w[]){
 
   double t=0;
-  TransportImposedData(x,t,w);
+  WavesImposedData(x,t,w);
 
 };
 
 void WavesInitData2d(double x[3],double w[]){
 
   double t=0;
-  TransportImposedData2d(x,t,w);
+  WavesImposedData2d(x,t,w);
 
 };
 
@@ -86,9 +86,9 @@ void WavesInitData2d(double x[3],double w[]){
 void WavesImposedData(double x[3],double t,double w[]){
 
   double vx =
-    transport_v[0] * x[0] +
-    transport_v[1] * x[1] +
-    transport_v[2] * x[2];
+    waves_v[0] * x[0] +
+    waves_v[1] * x[1] +
+    waves_v[2] * x[2];
 
   double xx = vx - t;
 
@@ -98,9 +98,9 @@ void WavesImposedData(double x[3],double t,double w[]){
 void WavesImposedData2d(double x[3],double t,double w[]){
 
   double vx =
-    transport_v2d[0] * x[0] +
-    transport_v2d[1] * x[1] +
-    transport_v2d[2] * x[2];
+    waves_v2d[0] * x[0] +
+    waves_v2d[1] * x[1] +
+    waves_v2d[2] * x[2];
 
   double xx = vx - t;
 
@@ -110,21 +110,21 @@ void WavesImposedData2d(double x[3],double t,double w[]){
 void TestWavesBoundaryFlux(double x[3],double t,double wL[],double* vnorm,
 			   double* flux){
   double wR[1];
-  TestTransportImposedData(x,t,wR);
-  TransportNumFlux(wL,wR,vnorm,flux);
+  TestWavesImposedData(x,t,wR);
+  WavesNumFlux(wL,wR,vnorm,flux);
 };
 
 void TestWavesBoundaryFlux2d(double x[3],double t,double wL[],double* vnorm,
 			   double* flux){
   double wR[1];
-  TestTransportImposedData2d(x,t,wR);
-  TransportNumFlux2d(wL,wR,vnorm,flux);
+  TestWavesImposedData2d(x,t,wR);
+  WavesNumFlux2d(wL,wR,vnorm,flux);
 };
 
 void TestWavesInitData(double x[3],double w[]){
 
   double t=0;
-  TestTransportImposedData(x,t,w);
+  TestWavesImposedData(x,t,w);
 
 };
 
@@ -132,16 +132,16 @@ void TestWavesInitData(double x[3],double w[]){
 void TestWavesInitData2d(double x[3],double w[]){
 
   double t=0;
-  TestTransportImposedData2d(x,t,w);
+  TestWavesImposedData2d(x,t,w);
 
 };
 
 void TestWavesImposedData(double x[3],double t,double w[]){
 
   double vx =
-    transport_v[0] * x[0] +
-    transport_v[1] * x[1] +
-    transport_v[2] * x[2];
+    waves_v[0] * x[0] +
+    waves_v[1] * x[1] +
+    waves_v[2] * x[2];
 
   double xx = vx - t;
 
@@ -152,9 +152,9 @@ void TestWavesImposedData(double x[3],double t,double w[]){
 void TestWavesImposedData2d(double x[3],double t,double w[]){
 
   double vx =
-    transport_v2d[0] * x[0] +
-    transport_v2d[1] * x[1] +
-    transport_v2d[2] * x[2];
+    waves_v2d[0] * x[0] +
+    waves_v2d[1] * x[1] +
+    waves_v2d[2] * x[2];
 
   double xx = vx - t;
 
