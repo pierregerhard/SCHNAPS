@@ -25,6 +25,10 @@ int TestFieldSubCellDGVol(void);
 
 int TestFieldRK2_2D_SubCell(void);
 
+int TestEuler(void);
+
+int TestWaves(void);
+
 
 
 #endif

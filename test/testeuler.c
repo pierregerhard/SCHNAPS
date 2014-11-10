@@ -2,19 +2,18 @@
 //#include "geometry.h"
 //#include "interpolation.h"
 #include "test.h"
-#include "ondes.h"
+#include "euler.h"
 //#include "field.h"
 
 #include <stdio.h>
 #include <math.h>
 #include <assert.h>
 
-
 int main(void) {
   
   // unit tests
     
-  int resu=TestWaves();
+  int resu=TestEuler();
 	 
 
   if (resu) printf("Model test OK !\n");
@@ -23,19 +22,17 @@ int main(void) {
   return !resu;
 } 
 
-
-
-int TestWaves (void){
+int TestEuler(void){
   Field f;
-  f.model.m=3; // only one conservative variable
-  f.model.NumFlux=WavesNumFlux2d;
-  f.model.BoundaryFlux=WavesBoundaryFlux2d;
-  f.model.InitData=WavesInitData2d;
-  f.model.ImposedData=WavesImposedData2d;
+  f.model.m=1; // only one conservative variable
+  f.model.NumFlux=EulerNumFlux2d;
+  f.model.BoundaryFlux=EulerBoundaryFlux2d;
+  f.model.InitData=EulerInitData2d;
+  f.model.ImposedData=EulerImposedData2d;
   f.varindex=GenericVarindex;
 
 
-  f.interp.interp_param[0]=3;  // _M
+  f.interp.interp_param[0]=1;  // _M
   f.interp.interp_param[1]=3;  // x direction degree
   f.interp.interp_param[2]=3;  // y direction degree
   f.interp.interp_param[3]=0;  // z direction degree
@@ -77,6 +74,8 @@ int TestWaves (void){
 
   double dd=L2error(&f);
 
-  printf("erreur L2=%f \n",dd);
+  printf("erreur L2=%f\n",dd);
   return 0;
+
+
 };
