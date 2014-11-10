@@ -32,6 +32,7 @@ src/ondes.h
 src/shallow.h
 src/euler.h
 src/ondes.c
+src/stvenantlin.h
 src/field.c
 src/geometry.c
 src/interpolation.c
@@ -39,6 +40,7 @@ src/macromesh.c
 src/model.c
 src/euler.c
 src/shallow.c
+src/stvenantlin.c
 )
 
 #schnaps library
@@ -83,6 +85,13 @@ add_executable(
 )
 target_link_libraries(testmodel _schnaps m pthread)
 
+add_executable(
+  teststvenantlin
+  test/test.h
+  test/teststvenantlin.c
+)
+target_link_libraries(teststvenantlin _schnaps m pthread)
+add_test(teststvenantlin teststvenantlin)
 
 add_test(testfield testfield)
 add_executable(
