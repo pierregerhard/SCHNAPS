@@ -103,6 +103,16 @@ add_executable(
 target_link_libraries(testfielddg _schnaps m pthread)
 add_test(testfielddg testfielddg)
 
+add_test(testwaves testwaves)
+add_executable(
+  testwaves
+  test/test.h
+  test/testwaves.c
+)
+target_link_libraries(testwaves _schnaps m pthread)
+add_test(testwaves testwaves)
+
+
 add_test(testfieldrk2 testfieldrk2)
 add_executable(
   testfieldrk2
