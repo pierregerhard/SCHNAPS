@@ -23,6 +23,7 @@ int main(void) {
 } 
 
 int TestEuler(void){
+  int test = true ;
   Field f;
   f.model.m=4; // only one conservative variable
   f.model.NumFlux=EulerNumFlux2d;
@@ -33,11 +34,11 @@ int TestEuler(void){
 
 
   f.interp.interp_param[0]=4;  // _M
-  f.interp.interp_param[1]=2;  // x direction degree
-  f.interp.interp_param[2]=2;  // y direction degree
+  f.interp.interp_param[1]=1;  // x direction degree
+  f.interp.interp_param[2]=1;  // y direction degree
   f.interp.interp_param[3]=0;  // z direction degree
-  f.interp.interp_param[4]=8;  // x direction refinement
-  f.interp.interp_param[5]=8;  // y direction refinement
+  f.interp.interp_param[4]=2;  // x direction refinement
+  f.interp.interp_param[5]=2;  // y direction refinement
   f.interp.interp_param[6]=1;  // z direction refinement
 
 
@@ -66,7 +67,7 @@ int TestEuler(void){
   // apply the DG scheme
   // time integration by RK2 scheme 
   // up to final time = 1.
-  RK2(&f,1.);
+  RK2(&f,0.2);
  
   // save the results and the error
   PlotField(0,(1==0),&f,"dgvisu.msh");
@@ -75,7 +76,7 @@ int TestEuler(void){
   double dd=L2error(&f);
 
   printf("erreur L2=%f\n",dd);
-  return 0;
+  return test;
 
 
 };
