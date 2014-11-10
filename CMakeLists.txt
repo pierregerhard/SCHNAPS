@@ -2,8 +2,19 @@ cmake_minimum_required(VERSION 2.8)
 
 project(schnaps)
 
+#set(CMAKE_C_COMPILER "tau_cc.sh")
+#set(CMAKE_C_FLAGS "-optRevert -optTauSelectFile=select.tau -std=c99 -fopenmp -Ofast")
 #set(CMAKE_C_COMPILER "/opt/local/bin/gcc-mp-4.8")
-set(CMAKE_C_FLAGS "-std=c99 -D_REENTRANT -O")
+
+set(CMAKE_C_FLAGS "-std=c99 -D_REENTRANT -O3")
+find_package(OpenMP)
+if (OPENMP_FOUND)
+    set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
+    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+endif()
+
+
+
 include_directories(src)
 
 enable_testing()
@@ -18,21 +29,13 @@ src/h20phi.h
 src/interpolation.h
 src/macromesh.h
 src/model.h
-src/euler.h
-src/stvenantlin.h
-src/ondes.h
 src/field.c
 src/geometry.c
 src/interpolation.c
 src/macromesh.c
 src/model.c
-<<<<<<< HEAD
-src/shallow.c
-src/shallow.h
-=======
-src/euler.c
-src/stvenantlin.c
->>>>>>> cdc3661872274d5e0ff91e15d04a410ba38a28f4
+src/stvenantfp.h
+src/stvenantfp.c
 )
 
 #schnaps library
@@ -77,14 +80,6 @@ add_executable(
 )
 target_link_libraries(testmodel _schnaps m pthread)
 
-add_executable(
-  testeuler
-  test/test.h
-  test/testeuler.c
-)
-target_link_libraries(testeuler _schnaps m pthread)
-add_test(testeuler testeuler)
-
 add_test(testfield testfield)
 add_executable(
   testfield
@@ -102,16 +97,6 @@ add_executable(
 )
 target_link_libraries(testfielddg _schnaps m pthread)
 add_test(testfielddg testfielddg)
-
-add_test(testwaves testwaves)
-add_executable(
-  testwaves
-  test/test.h
-  test/testwaves.c
-)
-target_link_libraries(testwaves _schnaps m pthread)
-add_test(testwaves testwaves)
-
 
 add_test(testfieldrk2 testfieldrk2)
 add_executable(
