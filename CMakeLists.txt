@@ -83,10 +83,7 @@ add_executable(
 )
 target_link_libraries(testmodel _schnaps m pthread)
 
-<<<<<<< HEAD
-=======
 
->>>>>>> master
 add_test(testfield testfield)
 add_executable(
   testfield
@@ -105,7 +102,7 @@ add_executable(
 target_link_libraries(testfielddg _schnaps m pthread)
 add_test(testfielddg testfielddg)
 
-<<<<<<< HEAD
+
 add_test(testwaves testwaves)
 add_executable(
   testwaves
@@ -114,9 +111,6 @@ add_executable(
 )
 target_link_libraries(testwaves _schnaps m pthread)
 
-
-=======
->>>>>>> master
 
 add_test(testfieldrk2 testfieldrk2)
 add_executable(
