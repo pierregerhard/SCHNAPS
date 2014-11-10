@@ -1,4 +1,4 @@
-#include "model.h"
+#include "euler.h"
 #include <math.h>
 #include <stdio.h>
 #include <assert.h>
@@ -6,20 +6,20 @@
 #define ONE_OVER_SQRT_3 (0.57735026918962584)
 #define ONE_OVER_SQRT_2 (0.707106781186547524400844362105)
 
-const double transport_v[] = {
+const double euler_v[] = {
   ONE_OVER_SQRT_3,
   ONE_OVER_SQRT_3,
   ONE_OVER_SQRT_3};
 
 //const double transport_v[] = {1,0,0};
 
-const double transport_v2d[] = {
+const double euler_v2d[] = {
   ONE_OVER_SQRT_2,
   ONE_OVER_SQRT_2,
   0};
 
 
-void TransportNumFlux(double wL[],double wR[],double* vnorm,double* flux){
+void EulerNumFlux(double wL[],double wR[],double* vnorm,double* flux){
   
   double vn =
     transport_v[0] * vnorm[0] +
@@ -33,7 +33,7 @@ void TransportNumFlux(double wL[],double wR[],double* vnorm,double* flux){
 
 };
 
-void TransportNumFlux2d(double wL[],double wR[],double* vnorm,double* flux){
+void EulerNumFlux2d(double wL[],double wR[],double* vnorm,double* flux){
   
   double vn =
     transport_v2d[0] * vnorm[0] +
@@ -54,28 +54,28 @@ void TransportNumFlux2d(double wL[],double wR[],double* vnorm,double* flux){
 
 };
 
-void TransportBoundaryFlux(double x[3],double t,double wL[],double* vnorm,
+void EulerBoundaryFlux(double x[3],double t,double wL[],double* vnorm,
 			   double* flux){
   double wR[1];
   TransportImposedData(x,t,wR);
   TransportNumFlux(wL,wR,vnorm,flux);
 };
 
-void TransportBoundaryFlux2d(double x[3],double t,double wL[],double* vnorm,
+void EulerBoundaryFlux2d(double x[3],double t,double wL[],double* vnorm,
 			   double* flux){
   double wR[1];
   TransportImposedData2d(x,t,wR);
   TransportNumFlux2d(wL,wR,vnorm,flux);
 };
 
-void TransportInitData(double x[3],double w[]){
+void EulerInitData(double x[3],double w[]){
 
   double t=0;
   TransportImposedData(x,t,w);
 
 };
 
-void TransportInitData2d(double x[3],double w[]){
+void EulerInitData2d(double x[3],double w[]){
 
   double t=0;
   TransportImposedData2d(x,t,w);
@@ -83,7 +83,7 @@ void TransportInitData2d(double x[3],double w[]){
 };
 
 
-void TransportImposedData(double x[3],double t,double w[]){
+void EulerImposedData(double x[3],double t,double w[]){
 
   double vx =
     transport_v[0] * x[0] +
@@ -95,7 +95,7 @@ void TransportImposedData(double x[3],double t,double w[]){
   w[0]=cos(xx);
 };
 
-void TransportImposedData2d(double x[3],double t,double w[]){
+void EulerImposedData2d(double x[3],double t,double w[]){
 
   double vx =
     transport_v2d[0] * x[0] +
@@ -107,21 +107,21 @@ void TransportImposedData2d(double x[3],double t,double w[]){
   w[0]=cos(xx);
 };
 
-void TestTransportBoundaryFlux(double x[3],double t,double wL[],double* vnorm,
+void TestEulerBoundaryFlux(double x[3],double t,double wL[],double* vnorm,
 			   double* flux){
   double wR[1];
   TestTransportImposedData(x,t,wR);
   TransportNumFlux(wL,wR,vnorm,flux);
 };
 
-void TestTransportBoundaryFlux2d(double x[3],double t,double wL[],double* vnorm,
+void TestEulerBoundaryFlux2d(double x[3],double t,double wL[],double* vnorm,
 			   double* flux){
   double wR[1];
   TestTransportImposedData2d(x,t,wR);
   TransportNumFlux2d(wL,wR,vnorm,flux);
 };
 
-void TestTransportInitData(double x[3],double w[]){
+void TestEulerInitData(double x[3],double w[]){
 
   double t=0;
   TestTransportImposedData(x,t,w);
@@ -129,14 +129,14 @@ void TestTransportInitData(double x[3],double w[]){
 };
 
 
-void TestTransportInitData2d(double x[3],double w[]){
+void TestEulerInitData2d(double x[3],double w[]){
 
   double t=0;
   TestTransportImposedData2d(x,t,w);
 
 };
 
-void TestTransportImposedData(double x[3],double t,double w[]){
+void TestEulerImposedData(double x[3],double t,double w[]){
 
   double vx =
     transport_v[0] * x[0] +
@@ -149,7 +149,7 @@ void TestTransportImposedData(double x[3],double t,double w[]){
   //w[0]=xx;
 };
 
-void TestTransportImposedData2d(double x[3],double t,double w[]){
+void TestEulerImposedData2d(double x[3],double t,double w[]){
 
   double vx =
     transport_v2d[0] * x[0] +
