@@ -66,7 +66,7 @@ void StVenantLinBoundaryFlux(double x[3],double t,double wL[],double* vnorm,
 
 void StVenantLinBoundaryFlux2d(double x[3],double t,double wL[],double* vnorm,
 			   double* flux){
-  double wR[1];
+  double wR[3];
   StVenantLinImposedData2d(x,t,wR);
   StVenantLinNumFlux2d(wL,wR,vnorm,flux);
 };
@@ -122,7 +122,7 @@ void TestStVenantLinBoundaryFlux(double x[3],double t,double wL[],double* vnorm,
 
 void TestStVenantLinBoundaryFlux2d(double x[3],double t,double wL[],double* vnorm,
 			   double* flux){
-  double wR[1];
+  double wR[3];
   TestStVenantLinImposedData2d(x,t,wR);
   StVenantLinNumFlux2d(wL,wR,vnorm,flux);
 };
@@ -164,5 +164,8 @@ void TestStVenantLinImposedData2d(double x[3],double t,double w[]){
 
   double xx = vx - t;
 
-  w[0]=xx*xx;
+  //w[0]=xx*xx;
+  w[0]=1.;
+  w[1]=1.;
+  w[2]=1.;
 };
