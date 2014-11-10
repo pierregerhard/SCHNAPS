@@ -29,7 +29,11 @@ void EulerNumFlux(double wL[],double wR[],double* vnorm,double* flux){
    double vnp = vn>0 ? vn : 0;
    double vnm = vn-vnp;
 
-   flux[0] = vnp * wL[0] + vnm * wR[0];
+   //flux[0] = vnp * wL[0] + vnm * wR[0];
+   flux[0] = 0. ; 
+   flux[1] = 0. ;
+   flux[2] = 0. ;
+   flux[3] = 0. ;
 
 };
 
@@ -94,6 +98,9 @@ void EulerImposedData(double x[3],double t,double w[]){
 
   //w[0]=cos(xx);
   w[0] = 5. ;
+  w[1] = 5. ;
+  w[2] = 5. ;
+  w[3] = 5. ;
 };
 
 void EulerImposedData2d(double x[3],double t,double w[]){
@@ -107,6 +114,9 @@ void EulerImposedData2d(double x[3],double t,double w[]){
 
   //w[0]=cos(xx);
   w[0] = 5. ;
+  w[1] = 5. ;
+  w[2] = 5. ;
+  w[3] = 5. ;
 };
 
 void TestEulerBoundaryFlux(double x[3],double t,double wL[],double* vnorm,
