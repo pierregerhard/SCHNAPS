@@ -26,13 +26,8 @@ src/geometry.c
 src/interpolation.c
 src/macromesh.c
 src/model.c
-<<<<<<< HEAD
-src/shallow.c
-src/shallow.h
-=======
 src/euler.c
 src/stvenantlin.c
->>>>>>> cdc3661872274d5e0ff91e15d04a410ba38a28f4
 )
 
 #schnaps library
@@ -102,16 +97,6 @@ add_executable(
 )
 target_link_libraries(testfielddg _schnaps m pthread)
 add_test(testfielddg testfielddg)
-
-add_test(testwaves testwaves)
-add_executable(
-  testwaves
-  test/test.h
-  test/testwaves.c
-)
-target_link_libraries(testwaves _schnaps m pthread)
-add_test(testwaves testwaves)
-
 
 add_test(testfieldrk2 testfieldrk2)
 add_executable(
