@@ -32,81 +32,81 @@ typedef struct Model{
 } Model;
 
 
-//! \brief particular flux for the transport model
+//! \brief particular flux for the StVenantLin model
 //! \param[in] wL,wR : left and right states
 //! \param[in] vn : normal vector
 //! \param[out] flux : the flux
-void TransportNumFlux(double wL[],double wR[],double vn[3],double* flux);
-//! \brief particular flux for the 2d transport model
+void StVenantLinNumFlux(double wL[],double wR[],double vn[3],double* flux);
+//! \brief particular flux for the 2d StVenantLin model
 //! \param[in] wL,wR : left and right states
 //! \param[in] vn : normal vector
 //! \param[out] flux : the flux
-void TransportNumFlux2d(double wL[],double wR[],double vn[3],double* flux);
-//! \brief particular boundary flux for the transport model
+void StVenantLinNumFlux2d(double wL[],double wR[],double vn[3],double* flux);
+//! \brief particular boundary flux for the StVenantLin model
 //! \param[in] x : space position
 //! \param[in] t : time
 //! \param[in] wL : left state
 //! \param[in] vn : normal vector
 //! \param[out] flux : the flux
-void TransportBoundaryFlux(double* x,double t,double* wL,double* vn,
+void StVenantLinBoundaryFlux(double* x,double t,double* wL,double* vn,
 			   double* flux);
-//! \brief particular boundary flux for the 2d transport model
+//! \brief particular boundary flux for the 2d StVenantLin model
 //! \param[in] x : space position
 //! \param[in] t : time
 //! \param[in] wL : left state
 //! \param[in] vn : normal vector
 //! \param[out] flux : the flux
-void TransportBoundaryFlux2d(double* x,double t,double* wL,double* vn,
+void StVenantLinBoundaryFlux2d(double* x,double t,double* wL,double* vn,
 			     double* flux);
-//! \brief particular init data for the transport model
+//! \brief particular init data for the StVenantLin model
 //! \param[in] x : space position
 //! \param[out] w : init state at point x
-void TransportInitData(double* x,double* w);
-//! \brief particular init data for the 2d transport model
+void StVenantLinInitData(double* x,double* w);
+//! \brief particular init data for the 2d StVenantLin model
 //! \param[in] x : space position
 //! \param[out] w : init state at point x
-void TransportInitData2d(double* x,double* w);
-//! \brief particular imposed data for the transport model
+void StVenantLinInitData2d(double* x,double* w);
+//! \brief particular imposed data for the StVenantLin model
 //! \param[in] x,t : space and time position
 //! \param[out] w : imposed state at point x and time t
-void TransportImposedData(double* x,double t,double* w);
-//! \brief particular imposed data for the 2d transport model
+void StVenantLinImposedData(double* x,double t,double* w);
+//! \brief particular imposed data for the 2d StVenantLin model
 //! \param[in] x,t : space and time position
 //! \param[out] w : imposed state at point x and time t
-void TransportImposedData2d(double* x,double t,double* w);
+void StVenantLinImposedData2d(double* x,double t,double* w);
 
-//! \brief particular flux for testing the transport model
+//! \brief particular flux for testing the StVenantLin model
 //! \param[in] x : space position
 //! \param[in] t : time
 //! \param[in] wL : left state
 //! \param[in] vn : normal vector
 //! \param[out] flux : the flux
-void TestTransportBoundaryFlux(double* x,double t,double* wL,double* vn,
+void TestStVenantLinBoundaryFlux(double* x,double t,double* wL,double* vn,
 			       double* flux);
-//! \brief particular flux for testing the 2d transport model
+//! \brief particular flux for testing the 2d StVenantLin model
 //! \param[in] x : space position
 //! \param[in] t : time
 //! \param[in] wL : left state
 //! \param[in] vn : normal vector
 //! \param[out] flux : the flux
-void TestTransportBoundaryFlux2d(double* x,double t,double* wL,double* vn,
+void TestStVenantLinBoundaryFlux2d(double* x,double t,double* wL,double* vn,
 				 double* flux);
-//! \brief particular init data for the transport model
+//! \brief particular init data for the StVenantLin model
 //! \param[in] x : space position
 //! \param[out] w : init state at point x
-void TestTransportInitData(double* x,double* w);
-//! \brief particular init data for the 2d transport model
+void TestStVenantLinInitData(double* x,double* w);
+//! \brief particular init data for the 2d StVenantLin model
 //! \param[in] x : space position
 //! \param[out] w : init state at point x
-void TestTransportInitData2d(double* x,double* w);
-//! \brief particular imposed data for the transport model
+void TestStVenantLinInitData2d(double* x,double* w);
+//! \brief particular imposed data for the StVenantLin model
 //! \param[in] x,t : space and time position
 //! \param[out] w : imposed state at point x and time t
-void TestTransportImposedData(double* x,double t,double* w);
-//! \brief particular imposed data for the 2d transport model
+void TestStVenantLinImposedData(double* x,double t,double* w);
+//! \brief particular imposed data for the 2d StVenantLin model
 //! \param[in] x,t : space and time position
 //! \param[out] w : imposed state at point x and time t
-void TestTransportImposedData2d(double* x,double t,double* w);
+void TestStVenantLinImposedData2d(double* x,double t,double* w);
 
 
 #endif

@@ -6,25 +6,25 @@
 #define ONE_OVER_SQRT_3 (0.57735026918962584)
 #define ONE_OVER_SQRT_2 (0.707106781186547524400844362105)
 
-const double transport_v[] = {
+const double stvenantlin_v[] = {
   ONE_OVER_SQRT_3,
   ONE_OVER_SQRT_3,
   ONE_OVER_SQRT_3};
 
-//const double transport_v[] = {1,0,0};
+//const double stvenantlin_v[] = {1,0,0};
 
-const double transport_v2d[] = {
+const double stvenantlin_v2d[] = {
   ONE_OVER_SQRT_2,
   ONE_OVER_SQRT_2,
   0};
 
 
-void TransportNumFlux(double wL[],double wR[],double* vnorm,double* flux){
+void StVenantLinNumFlux(double wL[],double wR[],double* vnorm,double* flux){
   
   double vn =
-    transport_v[0] * vnorm[0] +
-    transport_v[1] * vnorm[1] +
-    transport_v[2] * vnorm[2];
+    stvenantlin_v[0] * vnorm[0] +
+    stvenantlin_v[1] * vnorm[1] +
+    stvenantlin_v[2] * vnorm[2];
 
    double vnp = vn>0 ? vn : 0;
    double vnm = vn-vnp;
@@ -33,17 +33,20 @@ void TransportNumFlux(double wL[],double wR[],double* vnorm,double* flux){
 
 };
 
-void TransportNumFlux2d(double wL[],double wR[],double* vnorm,double* flux){
+void StVenantLinNumFlux2d(double wL[],double wR[],double* vnorm,double* flux){
   
   double vn =
-    transport_v2d[0] * vnorm[0] +
-    transport_v2d[1] * vnorm[1] +
-    transport_v2d[2] * vnorm[2];
+    stvenantlin_v2d[0] * vnorm[0] +
+    stvenantlin_v2d[1] * vnorm[1] +
+    stvenantlin_v2d[2] * vnorm[2];
 
    double vnp = vn>0 ? vn : 0;
    double vnm = vn-vnp;
 
-   flux[0] = vnp * wL[0] + vnm * wR[0];
+  // flux[0] = vnp * wL[0] + vnm * wR[0];
+   flux[0]=0;
+   flux[1]=0;
+   flux[2]=0;
    /* if (fabs(vnorm[2])>1e-6){ */
    /*   printf("vnds %lf %lf %lf \n",vnorm[0],vnorm[1],vnorm[2]); */
    /* } */
@@ -54,94 +57,97 @@ void TransportNumFlux2d(double wL[],double wR[],double* vnorm,double* flux){
 
 };
 
-void TransportBoundaryFlux(double x[3],double t,double wL[],double* vnorm,
+void StVenantLinBoundaryFlux(double x[3],double t,double wL[],double* vnorm,
 			   double* flux){
   double wR[1];
-  TransportImposedData(x,t,wR);
-  TransportNumFlux(wL,wR,vnorm,flux);
+  StVenantLinImposedData(x,t,wR);
+  StVenantLinNumFlux(wL,wR,vnorm,flux);
 };
 
-void TransportBoundaryFlux2d(double x[3],double t,double wL[],double* vnorm,
+void StVenantLinBoundaryFlux2d(double x[3],double t,double wL[],double* vnorm,
 			   double* flux){
   double wR[1];
-  TransportImposedData2d(x,t,wR);
-  TransportNumFlux2d(wL,wR,vnorm,flux);
+  StVenantLinImposedData2d(x,t,wR);
+  StVenantLinNumFlux2d(wL,wR,vnorm,flux);
 };
 
-void TransportInitData(double x[3],double w[]){
+void StVenantLinInitData(double x[3],double w[]){
 
   double t=0;
-  TransportImposedData(x,t,w);
+  StVenantLinImposedData(x,t,w);
 
 };
 
-void TransportInitData2d(double x[3],double w[]){
+void StVenantLinInitData2d(double x[3],double w[]){
 
   double t=0;
-  TransportImposedData2d(x,t,w);
+  StVenantLinImposedData2d(x,t,w);
 
 };
 
 
-void TransportImposedData(double x[3],double t,double w[]){
+void StVenantLinImposedData(double x[3],double t,double w[]){
 
   double vx =
-    transport_v[0] * x[0] +
-    transport_v[1] * x[1] +
-    transport_v[2] * x[2];
+    stvenantlin_v[0] * x[0] +
+    stvenantlin_v[1] * x[1] +
+    stvenantlin_v[2] * x[2];
 
   double xx = vx - t;
 
   w[0]=cos(xx);
-};
+ };
 
-void TransportImposedData2d(double x[3],double t,double w[]){
+void StVenantLinImposedData2d(double x[3],double t,double w[]){
 
   double vx =
-    transport_v2d[0] * x[0] +
-    transport_v2d[1] * x[1] +
-    transport_v2d[2] * x[2];
+    stvenantlin_v2d[0] * x[0] +
+    stvenantlin_v2d[1] * x[1] +
+    stvenantlin_v2d[2] * x[2];
 
   double xx = vx - t;
 
-  w[0]=cos(xx);
+ // w[0]=cos(xx);
+ w[0]=1.;
+ w[1]=1.;
+ w[2]=1.;
 };
 
-void TestTransportBoundaryFlux(double x[3],double t,double wL[],double* vnorm,
+void TestStVenantLinBoundaryFlux(double x[3],double t,double wL[],double* vnorm,
 			   double* flux){
   double wR[1];
-  TestTransportImposedData(x,t,wR);
-  TransportNumFlux(wL,wR,vnorm,flux);
+  TestStVenantLinImposedData(x,t,wR);
+  StVenantLinNumFlux(wL,wR,vnorm,flux);
 };
 
-void TestTransportBoundaryFlux2d(double x[3],double t,double wL[],double* vnorm,
+void TestStVenantLinBoundaryFlux2d(double x[3],double t,double wL[],double* vnorm,
 			   double* flux){
   double wR[1];
-  TestTransportImposedData2d(x,t,wR);
-  TransportNumFlux2d(wL,wR,vnorm,flux);
+  TestStVenantLinImposedData2d(x,t,wR);
+  StVenantLinNumFlux2d(wL,wR,vnorm,flux);
 };
 
-void TestTransportInitData(double x[3],double w[]){
+void TestStVenantLinInitData(double x[3],double w[]){
 
   double t=0;
-  TestTransportImposedData(x,t,w);
+  TestStVenantLinImposedData(x,t,w);
 
 };
 
 
-void TestTransportInitData2d(double x[3],double w[]){
+void TestStVenantLinInitData2d(double x[3],double w[]){
 
   double t=0;
-  TestTransportImposedData2d(x,t,w);
+  TestStVenantLinImposedData2d(x,t,w);
 
 };
 
-void TestTransportImposedData(double x[3],double t,double w[]){
+void TestStVenantLinImposedData(double x[3],double t,double w[]){
 
   double vx =
-    transport_v[0] * x[0] +
-    transport_v[1] * x[1] +
-    transport_v[2] * x[2];
+    stvenantlin_v[0] * x[0] +
+    stvenantlin_v[1] * x[1] +
+    stvenantlin_v[2] * x[2];
 
   double xx = vx - t;
 
@@ -149,12 +155,12 @@ void TestTransportImposedData(double x[3],double t,double w[]){
   //w[0]=xx;
 };
 
-void TestTransportImposedData2d(double x[3],double t,double w[]){
+void TestStVenantLinImposedData2d(double x[3],double t,double w[]){
 
   double vx =
-    transport_v2d[0] * x[0] +
-    transport_v2d[1] * x[1] +
-    transport_v2d[2] * x[2];
+    stvenantlin_v2d[0] * x[0] +
+    stvenantlin_v2d[1] * x[1] +
+    stvenantlin_v2d[2] * x[2];
 
   double xx = vx - t;
 

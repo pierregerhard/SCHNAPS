@@ -80,6 +80,14 @@ add_executable(
 target_link_libraries(testeuler _schnaps m pthread)
 add_test(testeuler testeuler)
 
+add_executable(
+  teststvenantlin
+  test/test.h
+  test/teststvenantlin.c
+)
+target_link_libraries(teststvenantlin _schnaps m pthread)
+add_test(teststvenantlin teststvenantlin)
+
 add_test(testfield testfield)
 add_executable(
   testfield
