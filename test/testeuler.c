@@ -24,7 +24,7 @@ int main(void) {
 
 int TestEuler(void){
   Field f;
-  f.model.m=1; // only one conservative variable
+  f.model.m=4; // only one conservative variable
   f.model.NumFlux=EulerNumFlux2d;
   f.model.BoundaryFlux=EulerBoundaryFlux2d;
   f.model.InitData=EulerInitData2d;
@@ -32,9 +32,9 @@ int TestEuler(void){
   f.varindex=GenericVarindex;
 
 
-  f.interp.interp_param[0]=1;  // _M
-  f.interp.interp_param[1]=3;  // x direction degree
-  f.interp.interp_param[2]=3;  // y direction degree
+  f.interp.interp_param[0]=4;  // _M
+  f.interp.interp_param[1]=2;  // x direction degree
+  f.interp.interp_param[2]=2;  // y direction degree
   f.interp.interp_param[3]=0;  // z direction degree
   f.interp.interp_param[4]=8;  // x direction refinement
   f.interp.interp_param[5]=8;  // y direction refinement
