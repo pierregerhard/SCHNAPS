@@ -31,6 +31,7 @@ src/model.h
 src/ondes.h
 src/shallow.h
 src/euler.h
+src/ondes.c
 src/field.c
 src/geometry.c
 src/interpolation.c
@@ -109,6 +110,14 @@ add_executable(
 )
 target_link_libraries(testfielddg _schnaps m pthread)
 add_test(testfielddg testfielddg)
+
+add_test(testwaves testwaves)
+add_executable(
+  testwaves
+  test/test.h
+  test/testondes.c
+)
+target_link_libraries(testwaves _schnaps m pthread)
 
 add_test(testfieldrk2 testfieldrk2)
 add_executable(
