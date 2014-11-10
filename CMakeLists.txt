@@ -107,7 +107,7 @@ add_test(testwaves testwaves)
 add_executable(
   testwaves
   test/test.h
-  test/testwaves.c
+  test/testondes.c
 )
 target_link_libraries(testwaves _schnaps m pthread)
 add_test(testwaves testwaves)
