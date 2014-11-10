@@ -17,7 +17,6 @@ src/h20phi.h
 src/interpolation.h
 src/macromesh.h
 src/model.h
-src/stvenantlin.h
 src/ondes.h
 src/field.c
 src/geometry.c
@@ -26,7 +25,6 @@ src/macromesh.c
 src/model.c
 src/shallow.c
 src/shallow.h
-src/stvenantlin.c
 )
 
 #schnaps library
@@ -149,7 +147,4 @@ add_executable(
 
 target_link_libraries( testshallow _schnaps m pthread )
 add_test( testshallow testshallow )        
-    
-    
-    
     
