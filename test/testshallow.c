@@ -6,20 +6,13 @@
 
 int main(void) {
 
-
   Field f;
-  f.model.m=3; // only one conservative variable
-  f.model.NumFlux=ShallowNumFlux2d;
-  f.model.BoundaryFlux=ShallowBoundaryFlux2d;
-  f.model.InitData=ShallowInitData2d;
-  f.model.ImposedData=ShallowImposedData2d;
+  f.model.m=1; // only one conservative variable
+  f.model.NumFlux=TransportNumFlux2d;
+  f.model.BoundaryFlux=TransportBoundaryFlux2d;
+  f.model.InitData=TransportInitData2d;
+  f.model.ImposedData=TransportImposedData2d;
   f.varindex=GenericVarindex;
-
-
-
-
-
-
 
 
   f.interp.interp_param[0]=1;  // _M
@@ -28,7 +21,7 @@ int main(void) {
   f.interp.interp_param[3]=0;  // z direction degree
   f.interp.interp_param[4]=8;  // x direction refinement
   f.interp.interp_param[5]=8;  // y direction refinement
-  f.interp.interp_param[6]=1;  // z direction refineme
+  f.interp.interp_param[6]=1;  // z direction refinement
 
 
   // read the gmsh file
@@ -67,6 +60,6 @@ int main(void) {
   printf("erreur L2=%f\n",dd);
   return 0;
 
-};
+}
 
 

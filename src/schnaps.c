@@ -1,10 +1,10 @@
+
 #include "schnaps.h"
 #include <stdio.h>
 #include <assert.h>
 
 
 int main(void) {
-
 
   Field f;
   f.model.m=1; // only one conservative variable
@@ -60,6 +60,6 @@ int main(void) {
   printf("erreur L2=%f\n",dd);
   return 0;
 
-};
+}
 
 
