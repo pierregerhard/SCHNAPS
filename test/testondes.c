@@ -1,53 +1,56 @@
+//#include "macromesh.h"
+//#include "geometry.h"
+//#include "interpolation.h"
 #include "test.h"
-#include "schnaps.h"
-#include<stdio.h>
-#include <assert.h>
+#include "model.h"
+//#include "field.h"
+
+#include <stdio.h>
 #include <math.h>
+#include <assert.h>
 
 int main(void) {
   
   // unit tests
     
-  int resu=TestField();
+  int resu=TestModel();
 	 
-  if (resu) printf("Field test OK !\n");
-  else printf("Field test failed !\n");
+
+  if (resu) printf("Model test OK !\n");
+  else printf("Model test failed !\n");
 
   return !resu;
 } 
 
+int TestModel(void){
 
+  int test= (1==1);
+  // creation of a simple transport model
+  Model tr;
+  tr.m=1; // only one conservative variable
+  tr.NumFlux=TransportNumFlux;
+  tr.BoundaryFlux=TestTransportBoundaryFlux;
+  tr.InitData=TestTransportInitData;
+  tr.ImposedData=TestTransportImposedData;
 
+  double wL[tr.m];
+  double wR[tr.m];
+  double flux1[tr.m],flux2[tr.m];
 
-int TestField(void){
+  double x[3]={1,1,2};
+  double t=0;
+  double vn[3]={1/sqrt(3),1/sqrt(3),-1/sqrt(3)};
 
-  int test = (1==1);
+  tr.InitData(x,wR);
+  tr.NumFlux(wL,wR,vn,flux1);
+  printf("NumFlux %f \n",flux1[0]);
+  tr.BoundaryFlux(x,t,wL,vn,flux2);
+  printf("BoundaryFlux %f \n",flux2[0]);
 
-  Field f;
-  f.model.m=1; // only one conservative variable
-  f.model.NumFlux=TransportNumFlux;
-  f.model.BoundaryFlux=TestTransportBoundaryFlux;
-  f.model.InitData=TestTransportInitData;
-  f.model.ImposedData=TestTransportImposedData;
-  f.varindex=GenericVarindex;
+  double err=fabs(flux2[0]-flux1[0]);
 
-  f.interp.interp_param[0]=1;  // _M
-  f.interp.interp_param[1]=2;  // x direction degree
-  f.interp.interp_param[2]=2;  // y direction degree
-  f.interp.interp_param[3]=2;  // z direction degree
-  f.interp.interp_param[4]=2;  // x direction refinement
-  f.interp.interp_param[5]=2;  // y direction refinement
-  f.interp.interp_param[6]=2;  // z direction refinement
+  test=(err < 1e-8);
 
-  ReadMacroMesh(&(f.macromesh),"test/testmacromesh.msh");
-  BuildConnectivity(&(f.macromesh));
-
-  InitField(&f);
-  CheckMacroMesh(&(f.macromesh),f.interp.interp_param+1);
-
-  PlotField(0,(1==0),&f,"testvisufield.msh");
-  
   return test;
-
 
 };
