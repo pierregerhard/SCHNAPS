@@ -8,8 +8,7 @@ include_directories(src)
 
 enable_testing()
 
-list(APPEND
-source_files
+list(APPEND source_files
 src/field.h
 src/schnaps.h
 src/geometry.h
@@ -18,6 +17,7 @@ src/h20phi.h
 src/interpolation.h
 src/macromesh.h
 src/model.h
+src/stvenantlin.h
 src/ondes.h
 src/ondes.c
 src/field.c
@@ -25,6 +25,9 @@ src/geometry.c
 src/interpolation.c
 src/macromesh.c
 src/model.c
+src/shallow.c
+src/shallow.h
+src/stvenantlin.c
 )
 
 #schnaps library
@@ -69,6 +72,10 @@ add_executable(
 )
 target_link_libraries(testmodel _schnaps m pthread)
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
 add_test(testfield testfield)
 add_executable(
   testfield
@@ -87,6 +94,7 @@ add_executable(
 target_link_libraries(testfielddg _schnaps m pthread)
 add_test(testfielddg testfielddg)
 
+<<<<<<< HEAD
 add_test(testwaves testwaves)
 add_executable(
   testwaves
@@ -96,6 +104,8 @@ add_executable(
 target_link_libraries(testwaves _schnaps m pthread)
 
 
+=======
+>>>>>>> master
 
 add_test(testfieldrk2 testfieldrk2)
 add_executable(
@@ -135,6 +145,10 @@ target_link_libraries(testsubcelldgvol _schnaps m pthread)
 add_test(testsubcelldgvol testsubcelldgvol)
 
 add_test(testfieldrk2-2d-subcell testfieldrk2-2d-subcell)
+
+
+
+
 add_executable(
   testfieldrk2-2d-subcell
   test/test.h
@@ -142,3 +156,16 @@ add_executable(
 )
 target_link_libraries(testfieldrk2-2d-subcell _schnaps m pthread)
 add_test(testfieldrk2-2d-subcell testfieldrk2-2d-subcell)
+
+add_executable(
+  testshallow 
+  test/testshallow.h                                                         
+  test/testshallow.c                                      
+)                                                                     
+
+target_link_libraries( testshallow _schnaps m pthread )
+add_test( testshallow testshallow )        
+    
+    
+    
+    
