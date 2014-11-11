@@ -76,13 +76,7 @@ add_executable(
   test/testmodel.c
 )
 target_link_libraries(testmodel _schnaps m pthread)
-
-<<<<<<< HEAD
-=======
-
->>>>>>> master
-add_test(testfield testfield)
-add_executable(
+add_test(  
   testfield
   test/test.h
   test/testfield.c
@@ -98,11 +92,6 @@ add_executable(
 )
 target_link_libraries(testfielddg _schnaps m pthread)
 add_test(testfielddg testfielddg)
-
-<<<<<<< HEAD
-=======
-
->>>>>>> master
 add_test(testfieldrk2 testfieldrk2)
 add_executable(
   testfieldrk2
@@ -142,9 +131,6 @@ add_test(testsubcelldgvol testsubcelldgvol)
 
 add_test(testfieldrk2-2d-subcell testfieldrk2-2d-subcell)
 
-
-
-
 add_executable(
   testfieldrk2-2d-subcell
   test/test.h
@@ -160,7 +146,16 @@ add_executable(
 )                                                                     
 
 target_link_libraries( testshallow _schnaps m pthread )
-add_test( testshallow testshallow )        
+add_test( testshallow testshallow )       
+ 
+add_executable(
+  teststvenantfp
+  test/teststvenantfp.h                                                         
+  test/teststvenatfp.c                                      
+)                                                                     
+
+target_link_libraries( teststvenant _schnaps m pthread )
+add_test( teststvenantfp teststvenantfp )        
     
     
     
