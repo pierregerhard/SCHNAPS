@@ -32,17 +32,8 @@ typedef struct Model{
 } Model;
 
 
-//! \brief particular flux for the transport model
-//! \param[in] wL,wR : left and right states
-//! \param[in] vn : normal vector
-//! \param[out] flux : the flux
-void TransportNumFlux(double wL[],double wR[],double vn[3],double* flux);
-//! \brief particular flux for the 2d transport model
-//! \param[in] wL,wR : left and right states
-//! \param[in] vn : normal vector
-//! \param[out] flux : the flux
-void TransportNumFlux2d(double wL[],double wR[],double vn[3],double* flux);
-//! \brief particular flux for the 2d transport model
+
+//! \brief particular flux for the 2d stvenant model
 //! \param[in] wL,wR : left and right states
 //! \param[in] vn : normal vecto
 //! \param[out] flux : the flux
@@ -53,23 +44,7 @@ void SvenantFpNumFlux2d(double wL[],double wR[],double vn[3],double* flux);
 //! \param[in] wL : left state
 //! \param[in] vn : normal vector
 //! \param[out] flux : the flux
-void TransportBoundaryFlux(double* x,double t,double* wL,double* vn,
-			   double* flux);
-//! \brief particular boundary flux for the transport model
-//! \param[in] x : space position
-//! \param[in] t : time
-//! \param[in] wL : left state
-//! \param[in] vn : normal vector
-//! \param[out] flux : the flux
 void StvenantFpBoundaryFlux(double* x,double t,double* wL,double* vn,double *flux);
-//! \brief particular boundary flux for the 2d transport model
-//! \param[in] x : space position
-//! \param[in] t : time
-//! \param[in] wL : left state
-//! \param[in] vn : normal vector
-//! \param[out] flux : the flux
-void TransportBoundaryFlux2d(double* x,double t,double* wL,double* vn,
-			     double* flux);
 //! \brief particular boundary flux for the 2d transport model
 //! \param[in] x : space position
 //! \param[in] t : time
@@ -89,40 +64,12 @@ void StvenantFpInitData(double* x,double* w);
 //! \brief particular init data for the 2d transport model
 //! \param[in] x : space position
 //! \param[out] w : init state at point x
-void TransportInitData2d(double* x,double* w);
-//! \brief particular init data for the 2d transport model
-//! \param[in] x : space position
-//! \param[out] w : init state at point x
 void SvenantFpInitData2d(double* x,double* w);
-//! \brief particular imposed data for the transport model
-//! \param[in] x,t : space and time position
-//! \param[out] w : imposed state at point x and time t
-void TransportImposedData(double* x,double t,double* w);
 //! \brief particular imposed data for the 2d transport model
 //! \param[in] x,t : space and time position
 //! \param[out] w : imposed state at point x and time t
 void SvenantFpImposedData2d(double* x,double t,double* w);
-//! \brief particular imposed data for the 2d transport model
-//! \param[in] x,t : space and time position
-//! \param[out] w : imposed state at point x and time t
-void TransportImposedData2d(double* x,double t,double* w);
 
-//! \brief particular flux for testing the transport model
-//! \param[in] x : space position
-//! \param[in] t : time
-//! \param[in] wL : left state
-//! \param[in] vn : normal vector
-//! \param[out] flux : the flux
-void TestTransportBoundaryFlux(double* x,double t,double* wL,double* vn,
-			       double* flux);
-//! \brief particular flux for testing the 2d transport model
-//! \param[in] x : space position
-//! \param[in] t : time
-//! \param[in] wL : left state
-//! \param[in] vn : normal vector
-//! \param[out] flux : the flux
-void TestTransportBoundaryFlux2d(double* x,double t,double* wL,double* vn,
-				 double* flux);
 //! \brief particular flux for testing the 2d transport model
 //! \param[in] x : space position
 //! \param[in] t : time
@@ -134,23 +81,15 @@ void TestSvenantFpBoundaryFlux2d(double* x,double t,double* wL,double* vn,
 //! \brief particular init data for the transport model
 //! \param[in] x : space position
 //! \param[out] w : init state at point x
-void TestTransportInitData(double* x,double* w);
+void TestSvenantFpInitData(double* x,double* w);
 //! \brief particular init data for the 2d transport model
 //! \param[in] x : space position
 //! \param[out] w : init state at point x
 void TestSvenantFpInitData2d(double* x,double* w);
-//! \brief particular init data for the 2d transport model
-//! \param[in] x : space position
-//! \param[out] w : init state at point x
-void TestTransportInitData2d(double* x,double* w);
 //! \brief particular imposed data for the transport model
 //! \param[in] x,t : space and time position
-//! \param[out] w : imposed state at point x and time t
-void TestTransportImposedData(double* x,double t,double* w);
-//! \brief particular imposed data for the 2d transport model
-//! \param[in] x,t : space and time position
-//! \param[out] w : imposed state at point x and time t
-void TestTransportImposedData2d(double* x,double t,double* w);
+//! \param[out] wt : imposed state at point x and time t
+void TestStvenantFImposeData(double* x,double t,double* w);
 //! \brief particular imposed data for the 2d transport model
 //! \param[in] x,t : space and time position
 //! \param[out] w : imposed state at point x and time t
