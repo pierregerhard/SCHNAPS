@@ -31,5 +31,8 @@ int TestWaves(void);
 
 int TestEuler(void);
 
+int TestStvenantFp(void);
+
+
 
 #endif
