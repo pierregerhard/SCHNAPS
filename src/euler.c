@@ -18,7 +18,6 @@ const double Euler_v2d[] = {
   ONE_OVER_SQRT_2,
   0};
 
-
 void EulerNumFlux(double wL[],double wR[],double* vnorm,double* flux){
   
   double vn =
