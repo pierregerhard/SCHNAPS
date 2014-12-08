@@ -35,10 +35,66 @@ void WavesNumFlux(double wL[],double wR[],double* vnorm,double* flux){
 
 void WavesNumFlux2d(double wL[],double wR[],double* vnorm,double* flux){
   
+    double n1,n2,s;
+
+    n1=vnorm[0];
+    n2=vnorm[1];
+    s=sqrt(n1*n1+n2*n2);
+
+    // Matrix A.n
+    
+    double A[3][3];
+    A[0][0]=0;
+    A[0][1]=-n1;
+    A[0][2]=-n2;
+    A[1][0]=-n1;
+    A[1][1]=0;
+    A[1][2]=0;
+    A[2][0]=-n2;
+    A[2][1]=0;
+    A[2][2]=0;
+
+
+    // Matrix A.n(-)
+
+    double AM[3][3];
+    AM[0][0]=s/2;
+    AM[0][1]=n1/2;
+    AM[0][2]=n2/2;
+    AM[1][0]=n1/2;
+    AM[1][1]=n1*n1/(2*s);
+    AM[1][2]=n1*n2/(2*s);
+    AM[2][0]=n2/2;
+    AM[2][1]=n1*n2/(2*s);
+    AM[2][2]=n2*n2/(2*s);
+
+    // Matrix A.n(+)
+
+    double AP[3][3];
+    AP[0][0]=-s/2;
+    AP[0][1]=n1/2;
+    AP[0][2]=n2/2;
+    AP[1][0]=n1/2;
+    AP[1][1]=-n1*n1/(2*s);
+    AP[1][2]=-n1*n2/(2*s);
+    AP[2][0]=n2/2;
+    AP[2][1]=-n1*n2/(2*s);
+    AP[2][2]=-n2*n2/(2*s);
+
+
+    flux[0]=AM[0][0]*wR[0]+AM[0][1]*wR[1]+AM[0][2]*wR[2]+AP[0][0]*wL[0]+AP[0][1]*wL[1]+AP[0][2]*wL[2];
+    flux[1]=AM[1][0]*wR[0]+AM[1][1]*wR[1]+AM[1][2]*wR[2]+AP[1][0]*wL[0]+AP[1][1]*wL[1]+AP[1][2]*wL[2];
+    flux[2]=AM[2][0]*wR[0]+AM[2][1]*wR[1]+AM[2][2]*wR[2]+AP[2][0]*wL[0]+AP[2][1]*wL[1]+AP[2][2]*wL[2];
+
+
+
+  /*
   double vn =
     waves_v2d[0] * vnorm[0] +
     waves_v2d[1] * vnorm[1] +
     waves_v2d[2] * vnorm[2];
+
+    
 
    double vnp = vn>0 ? vn : 0;
    double vnm = vn-vnp;
@@ -46,7 +102,7 @@ void WavesNumFlux2d(double wL[],double wR[],double* vnorm,double* flux){
    flux[0] = 0;
    flux[1] = 0;
    flux[2] = 0;
-   
+   */
    
    //flux[0] =  vnp * wL[0] + vnm * wR[0];
    /* if (fabs(vnorm[2])>1e-6){ */
