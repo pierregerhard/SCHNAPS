@@ -1,4 +1,5 @@
 #include "model.h"
+#include "maxwell.h"
 #include <math.h>
 #include <stdio.h>
 #include <assert.h>
@@ -19,7 +20,7 @@ void MaxwellNumFlux2dTM(double wL[],double wR[],double* vnorm,double* flux){
 			am31,am32,am33;
 	
 	am11 = -n2*n2/r;
-	am12 =  n1*n2/r
+	am12 =  n1*n2/r;
 	am13 = -n2;
 	am21 =  n1*n2;
 	am22 = -n1*n1;
@@ -67,9 +68,9 @@ void MaxwellNumFlux2dTM(double wL[],double wR[],double* vnorm,double* flux){
 
 void MaxwellMetalBoundary2DTM(double x[3],double t,double wL[],double* vnorm,
 						 double* flux){
-  Flux[0]=0;
-  Flux[1]=0;
-  Flux[2]=0;
+  flux[0]=0;
+  flux[1]=0;
+  flux[2]=0;
 };
 
 //Here we dont use silver-muller boundary condition...
