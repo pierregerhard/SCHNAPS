@@ -34,9 +34,9 @@ int TestMaxwell(void){
   f.interp.interp_param[3]=0;  // z direction degree
   f.interp.interp_param[4]=3;  // x direction refinement
   f.interp.interp_param[5]=3;  // y direction refinement
-  f.interp.interp_param[6]=3;  // z direction refinement
+  f.interp.interp_param[6]=1;  // z direction refinement
 
-  ReadMacroMesh(&(f.macromesh),"test/disque2d.msh");
+  ReadMacroMesh(&(f.macromesh),"test/testcube.msh");
   bool is2d=Detect2DMacroMesh(&(f.macromesh));
   assert(is2d);
   BuildConnectivity(&(f.macromesh));

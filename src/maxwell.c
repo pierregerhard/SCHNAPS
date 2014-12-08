@@ -17,7 +17,7 @@ void MaxwellNumFlux2dTM(double wL[],double wR[],double* vnorm,double* flux){
 	
 	r = sqrt(n1*n1 + n2*n2);
 	
-	printf("|| r : %lf || vnorm[0] : %lf ||  vnorm[1] : %lf || vnorm[2] : %lf ||\n",r,vnorm[0],vnorm[1],vnorm[2]);
+	// printf("|| r : %lf || vnorm[0] : %lf ||  vnorm[1] : %lf || vnorm[2] : %lf ||\n",r,vnorm[0],vnorm[1],vnorm[2]);
 	
 	
 	/*
@@ -92,7 +92,7 @@ void MaxwellNumFlux2dTM(double wL[],double wR[],double* vnorm,double* flux){
 	*	flux[1] = 0.5*(n1*(wL[3] + wR[3]));
 	*	flux[2] = 0.5*( -n2*(wL[1] +wR[1]) + n1*(wL[2] +wR[2]) );
 	*/
-	 assert(fabs(vnorm[3])<1e-8);
+	 assert(fabs(vnorm[2])<1e-8);
 };
 
 void MaxwellMetalBoundary2DTM(double x[3],double t,double wL[],double* vnorm,

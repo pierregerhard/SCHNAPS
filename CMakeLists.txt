@@ -36,6 +36,8 @@ src/geometry.c
 src/interpolation.c
 src/macromesh.c
 src/model.c
+src/maxwell.c
+src/maxwell.h
 )
 
 #schnaps library
@@ -152,3 +154,16 @@ add_executable(
 )
 target_link_libraries(testmeq2 _schnaps m pthread)
 add_test(testmeq2 testmeq2)
+
+add_test(maxwell maxwell)
+add_executable(
+  maxwell
+  test/test.h
+  test/testmaxwell.c
+)
+target_link_libraries(maxwell _schnaps m pthread)
+add_test(maxwell maxwell)
+
+
+
+
