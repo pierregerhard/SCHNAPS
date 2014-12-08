@@ -41,6 +41,7 @@ src/model.c
 src/euler.c
 src/shallow.c
 src/stvenantlin.c
+src/maxwell.c
 )
 
 #schnaps library
@@ -186,4 +187,15 @@ add_executable(
 
 target_link_libraries( testshallow _schnaps m pthread )
 add_test( testshallow testshallow )        
-    
+   
+add_executable(
+  testmaxwell
+  test/test.h
+  test/testmaxwell.c
+)
+target_link_libraries(testmaxwell _schnaps m pthread)
+add_test(testmaxwell testmaxwell)
+  
+  
+
+  
