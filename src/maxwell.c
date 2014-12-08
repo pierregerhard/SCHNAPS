@@ -4,12 +4,21 @@
 #include <stdio.h>
 #include <assert.h>
 #define _PI 3.1415926535897932384626
+#define ONE_OVER_SQRT_3 (0.57735026918962584)
+
 
 void MaxwellNumFlux2dTM(double wL[],double wR[],double* vnorm,double* flux){
 	double n1,n2,r;
+	
+	
+	
 	n1=vnorm[0];
 	n2=vnorm[1];
-	r = sqrt(n1*n1 +n2*n2);
+	
+	r = sqrt(n1*n1 + n2*n2);
+	
+	printf("|| r : %lf || vnorm[0] : %lf ||  vnorm[1] : %lf || vnorm[2] : %lf ||\n",r,vnorm[0],vnorm[1],vnorm[2]);
+	
 	
 	/*
 	* Elements of maxtrix Ai.ni(-)
@@ -49,12 +58,32 @@ void MaxwellNumFlux2dTM(double wL[],double wR[],double* vnorm,double* flux){
 	/*
 	*	UPWIND FLUX
 	*/
-	flux[0] = 0.5*(ap11*wL[0] + ap12*wL[1] + ap13*wL[2])
-			+ 0.5*(am11*wR[0] + am12*wR[1] + am13*wL[2]);
-	flux[1] = 0.5*(ap21*wL[0] + ap22*wL[1] + ap23*wL[2])
-			+ 0.5*(am21*wR[0] + am22*wR[1] + am23*wL[2]);
-	flux[2] = 0.5*(ap31*wL[0] + ap32*wL[1] + ap33*wL[2]) 
-			+ 0.5*(am31*wR[0] + am32*wR[1] + am33*wL[2]);
+	
+	// flux[0] = 0;
+	flux[1] = 0;
+	flux[2] = 0;
+	flux[3] =0;
+	
+	// flux[0] = 0.5*((n2*n2/r)*wL[0] + -(n1*n2/r)*wL[1] + -n2*wL[2]) + 0.5*((-n2*n2/r)*wR[0] + (n1*n2/r)*wR[1] + -n2*wL[2]);
+	// flux[1] = 0.5*(-n1*n2*wL[0] + n1*n1*wL[1]);
+    //	+ n1*wL[2]) + 0.5*(n1*n2*wR[0]  -n1*n1*wR[1] + n1*wL[2]);
+	// flux[2] = 0.5*(-n2*wL[0] + n1*wL[1]); // + r*wL[2] ) ;
+			// + 0.5*(am31*wR[0] + am32*wR[1] + am33*wL[2]);
+	
+	
+	
+	
+	
+	
+	// flux[0] = 0.5*(ap11*wL[0] + ap12*wL[1] + ap13*wL[2])
+			// + 0.5*(am11*wR[0] + am12*wR[1] + am13*wL[2]);
+	// printf("flux[0] : %f \n",flux[0]);
+	// flux[1] = 0.5*(ap21*wL[0] + ap22*wL[1] + ap23*wL[2])
+			// + 0.5*(am21*wR[0] + am22*wR[1] + am23*wL[2]);
+	// flux[2] = 0.5*(ap31*wL[0] + ap32*wL[1] + ap33*wL[2]) 
+			// + 0.5*(am31*wR[0] + am32*wR[1] + am33*wL[2]);
+	
+	
 	
 	/*
 	*	CENTERED FLUX F(wL,wR,n) = 0.5*A1n1(wL + wR) + 0.5*A2n2(wL + wR)
@@ -63,7 +92,7 @@ void MaxwellNumFlux2dTM(double wL[],double wR[],double* vnorm,double* flux){
 	*	flux[1] = 0.5*(n1*(wL[3] + wR[3]));
 	*	flux[2] = 0.5*( -n2*(wL[1] +wR[1]) + n1*(wL[2] +wR[2]) );
 	*/
-	 //assert(fabs(vnorm[3])<1e-8);
+	 assert(fabs(vnorm[3])<1e-8);
 };
 
 void MaxwellMetalBoundary2DTM(double x[3],double t,double wL[],double* vnorm,
@@ -92,6 +121,8 @@ void MaxwellInitData2dTM(double x[3],double w[]){
 
 void MaxwellImposedData2dTM(double x[3], double t, double* W){
 	
+	
+	
 	double pi=_PI;
     double k=2*pi;
     double theta=15;
@@ -99,6 +130,8 @@ void MaxwellImposedData2dTM(double x[3], double t, double* W){
     W[0] = -sin(theta)*onde;
     W[1] =  cos(theta)*onde;
     W[2] =  onde;
+	
+
 	/* Constant solution
 	double cst = 4;
 	W[0] = cst;
