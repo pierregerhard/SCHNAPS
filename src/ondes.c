@@ -54,6 +54,14 @@ void WavesNumFlux2d(double wL[],double wR[],double* vnorm,double* flux){
     A[2][1]=0;
     A[2][2]=0;
 
+    //Rusanov numerical flux
+
+/*
+    flux[0]=(A[0][0]*(wL[0]+wR[0])+A[0][1]*(wL[1]+wR[1])+A[0][2]*(wL[2]+wR[2]))/2 - s*(wR[0]-wL[0]);
+    flux[1]=(A[1][0]*(wL[0]+wR[0])+A[1][1]*(wL[1]+wR[1])+A[1][2]*(wL[2]+wR[2]))/2 - s*(wR[1]-wL[1]);
+    flux[2]=(A[2][0]*(wL[0]+wR[0])+A[2][1]*(wL[1]+wR[1])+A[2][2]*(wL[2]+wR[2]))/2 - s*(wR[2]-wL[2]);
+*/
+
 
     // Matrix A.n(-)
 
@@ -82,35 +90,20 @@ void WavesNumFlux2d(double wL[],double wR[],double* vnorm,double* flux){
     AP[2][2]=-n2*n2/(2*s);
 
 
+// Godunov numerical flux
     flux[0]=AM[0][0]*wR[0]+AM[0][1]*wR[1]+AM[0][2]*wR[2]+AP[0][0]*wL[0]+AP[0][1]*wL[1]+AP[0][2]*wL[2];
     flux[1]=AM[1][0]*wR[0]+AM[1][1]*wR[1]+AM[1][2]*wR[2]+AP[1][0]*wL[0]+AP[1][1]*wL[1]+AP[1][2]*wL[2];
     flux[2]=AM[2][0]*wR[0]+AM[2][1]*wR[1]+AM[2][2]*wR[2]+AP[2][0]*wL[0]+AP[2][1]*wL[1]+AP[2][2]*wL[2];
 
 
 
-  /*
-  double vn =
-    waves_v2d[0] * vnorm[0] +
-    waves_v2d[1] * vnorm[1] +
-    waves_v2d[2] * vnorm[2];
 
-    
 
-   double vnp = vn>0 ? vn : 0;
-   double vnm = vn-vnp;
 
-   flux[0] = 0;
-   flux[1] = 0;
-   flux[2] = 0;
-   */
-   
-   //flux[0] =  vnp * wL[0] + vnm * wR[0];
-   /* if (fabs(vnorm[2])>1e-6){ */
-   /*   printf("vnds %lf %lf %lf \n",vnorm[0],vnorm[1],vnorm[2]); */
-   /* } */
-   // verify that 2d computations are actually
-   // activated
-   assert(fabs(vnorm[2])<1e-8);
+
+
+
+    assert(fabs(vnorm[2])<1e-8);
 
 
 };
