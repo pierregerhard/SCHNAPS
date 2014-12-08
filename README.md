@@ -1,12 +1,13 @@
 SCHNAPS
 =======
-Fork pour projet volume finis
+
 Solveur pour les lois de Conservation Hyperboliques Non-linéaires Appliqué aux PlasmaS
-test mailing list
+
 Mode d'emploi
+
 téléchargement (nécessite git)
 
-git clone https://github.com/pgerhard/SCHNAPS.git
+git clone https://github.com/phelluy/SCHNAPS.git
 
 se placer dans le dossier SCHNAPS
 
@@ -46,4 +47,5 @@ Génération de la documentation (avec doxygen):
 
 cd doc/
 doxygen doxyschnaps
-....
+
+

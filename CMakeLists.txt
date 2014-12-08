@@ -1,3 +1,5 @@
+
+set(CMAKE_LEGACY_CYGWIN_WIN32 0) # Remove when CMake >= 2.8.4 is required
 cmake_minimum_required(VERSION 2.8)
 
 project(schnaps)
@@ -19,7 +21,8 @@ include_directories(src)
 
 enable_testing()
 
-list(APPEND source_files
+list(APPEND
+source_files
 src/field.h
 src/schnaps.h
 src/geometry.h
@@ -28,20 +31,11 @@ src/h20phi.h
 src/interpolation.h
 src/macromesh.h
 src/model.h
-src/ondes.h
-src/shallow.h
-src/euler.h
-src/ondes.c
-src/stvenantlin.h
 src/field.c
 src/geometry.c
 src/interpolation.c
 src/macromesh.c
 src/model.c
-src/euler.c
-src/shallow.c
-src/stvenantlin.c
-src/maxwell.c
 )
 
 #schnaps library
@@ -86,14 +80,6 @@ add_executable(
 )
 target_link_libraries(testmodel _schnaps m pthread)
 
-add_executable(
-  teststvenantlin
-  test/test.h
-  test/teststvenantlin.c
-)
-target_link_libraries(teststvenantlin _schnaps m pthread)
-add_test(teststvenantlin teststvenantlin)
-
 add_test(testfield testfield)
 add_executable(
   testfield
@@ -103,15 +89,6 @@ add_executable(
 target_link_libraries(testfield _schnaps m pthread)
 add_test(testfield testfield)
 
-add_test(testeuler testeuler)
-add_executable(
-  testeuler
-  test/test.h
-  test/testeuler.c
-)
-target_link_libraries(testeuler _schnaps m pthread)
-add_test(testeuler testeuler)
-
 add_test(testfielddg testfielddg)
 add_executable(
   testfielddg
@@ -120,14 +97,6 @@ add_executable(
 )
 target_link_libraries(testfielddg _schnaps m pthread)
 add_test(testfielddg testfielddg)
-
-add_test(testwaves testwaves)
-add_executable(
-  testwaves
-  test/test.h
-  test/testondes.c
-)
-target_link_libraries(testwaves _schnaps m pthread)
 
 add_test(testfieldrk2 testfieldrk2)
 add_executable(
@@ -167,10 +136,6 @@ target_link_libraries(testsubcelldgvol _schnaps m pthread)
 add_test(testsubcelldgvol testsubcelldgvol)
 
 add_test(testfieldrk2-2d-subcell testfieldrk2-2d-subcell)
-
-
-
-
 add_executable(
   testfieldrk2-2d-subcell
   test/test.h
@@ -179,23 +144,11 @@ add_executable(
 target_link_libraries(testfieldrk2-2d-subcell _schnaps m pthread)
 add_test(testfieldrk2-2d-subcell testfieldrk2-2d-subcell)
 
+add_test(testmeq2 testmeq2)
 add_executable(
-  testshallow 
-  test/testshallow.h                                                         
-  test/testshallow.c                                      
-)                                                                     
-
-target_link_libraries( testshallow _schnaps m pthread )
-add_test( testshallow testshallow )        
-   
-add_executable(
-  testmaxwell
+  testmeq2
   test/test.h
-  test/testmaxwell.c
+  test/testmeq2.c
 )
-target_link_libraries(testmaxwell _schnaps m pthread)
-add_test(testmaxwell testmaxwell)
-  
-  
-
-  
+target_link_libraries(testmeq2 _schnaps m pthread)
+add_test(testmeq2 testmeq2)

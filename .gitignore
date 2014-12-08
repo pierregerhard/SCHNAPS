@@ -43,11 +43,7 @@ toto
 
 dgerror.msh
 
-dgerrorstvenantlin.msh
-
 dgvisu.msh
-
-dgvisustvenantlin.msh
 
 error.msh
 
@@ -74,14 +70,6 @@ testinterpolation
 testmacromesh
 
 testmodel
-
-testeuler
-
-testshallow
-
-teststvenantlin
-
-testwaves
 
 testsubcelldgvol
 

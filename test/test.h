@@ -35,4 +35,7 @@ int TestStvenantFp(void);
 
 int TestMaxwell(void);
 
+int TestmEq2(void);
+
+
 #endif
