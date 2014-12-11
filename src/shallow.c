@@ -6,14 +6,14 @@
 #define ONE_OVER_SQRT_3 (0.57735026918962584)
 #define ONE_OVER_SQRT_2 (0.707106781186547524400844362105)
 
-const double transport_v[] = {
+const double shallow_v[] = {
   ONE_OVER_SQRT_3,
   ONE_OVER_SQRT_3,
   ONE_OVER_SQRT_3};
 
 //const double transport_v[] = {1,0,0};
 
-const double transport_v2d[] = {
+const double shallow_v2d[] = {
   ONE_OVER_SQRT_2,
   ONE_OVER_SQRT_2,
   0};
@@ -22,9 +22,9 @@ const double transport_v2d[] = {
 void ShallowNumFlux(double wL[],double wR[],double* vnorm,double* flux){
   
   double vn =
-    transport_v[0] * vnorm[0] +
-    transport_v[1] * vnorm[1] +
-    transport_v[2] * vnorm[2];
+    shallow_v[0] * vnorm[0] +
+    shallow_v[1] * vnorm[1] +
+    shallow_v[2] * vnorm[2];
 
    double vnp = vn>0 ? vn : 0;
    double vnm = vn-vnp;
@@ -36,9 +36,9 @@ void ShallowNumFlux(double wL[],double wR[],double* vnorm,double* flux){
 void ShallowNumFlux2d(double wL[],double wR[],double* vnorm,double* flux){
   
   double vn =
-    transport_v2d[0] * vnorm[0] +
-    transport_v2d[1] * vnorm[1] +
-    transport_v2d[2] * vnorm[2];
+    shallow_v2d[0] * vnorm[0] +
+    shallow_v2d[1] * vnorm[1] +
+    shallow_v2d[2] * vnorm[2];
 
    double vnp = vn>0 ? vn : 0;
    double vnm = vn-vnp;
@@ -86,9 +86,9 @@ void ShallowInitData2d(double x[3],double w[]){
 void ShallowImposedData(double x[3],double t,double w[]){
 
   double vx =
-    transport_v[0] * x[0] +
-    transport_v[1] * x[1] +
-    transport_v[2] * x[2];
+    shallow_v[0] * x[0] +
+    shallow_v[1] * x[1] +
+    shallow_v[2] * x[2];
 
   double xx = vx - t;
 
@@ -98,9 +98,9 @@ void ShallowImposedData(double x[3],double t,double w[]){
 void ShallowImposedData2d(double x[3],double t,double w[]){
 
   double vx =
-    transport_v2d[0] * x[0] +
-    transport_v2d[1] * x[1] +
-    transport_v2d[2] * x[2];
+    shallow_v2d[0] * x[0] +
+    shallow_v2d[1] * x[1] +
+    shallow_v2d[2] * x[2];
 
   double xx = vx - t;
 
@@ -139,9 +139,9 @@ void TestShallowInitData2d(double x[3],double w[]){
 void TestShallowImposedData(double x[3],double t,double w[]){
 
   double vx =
-    transport_v[0] * x[0] +
-    transport_v[1] * x[1] +
-    transport_v[2] * x[2];
+    shallow_v[0] * x[0] +
+    shallow_v[1] * x[1] +
+    shallow_v[2] * x[2];
 
   double xx = vx - t;
 
@@ -152,9 +152,9 @@ void TestShallowImposedData(double x[3],double t,double w[]){
 void TestShallowImposedData2d(double x[3],double t,double w[]){
 
   double vx =
-    transport_v2d[0] * x[0] +
-    transport_v2d[1] * x[1] +
-    transport_v2d[2] * x[2];
+    shallow_v2d[0] * x[0] +
+    shallow_v2d[1] * x[1] +
+    shallow_v2d[2] * x[2];
 
   double xx = vx - t;
 
