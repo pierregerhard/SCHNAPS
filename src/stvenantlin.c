@@ -34,7 +34,7 @@ void StVenantLinNumFlux(double wL[],double wR[],double* vnorm,double* flux){
 };
 
 void StVenantLinNumFlux2d(double wL[],double wR[],double* vnorm,double* flux){
-  
+  /*
   double vn =
     stvenantlin_v2d[0] * vnorm[0] +
     stvenantlin_v2d[1] * vnorm[1] +
@@ -47,6 +47,19 @@ void StVenantLinNumFlux2d(double wL[],double wR[],double* vnorm,double* flux){
    flux[0]=0;
    flux[1]=0;
    flux[2]=0;
+
+*/
+
+
+//essai flux de Rusanov
+double lambda=- sqrt(const_g*H0*vnorm[0]*vnorm[0]*vnorm[1]*vnorm[1]) ; 
+flux[0]=(1./2)*(vnorm[0]*wL[1] + vnorm[1]*wL[2] + vnorm[0]*wR[1] + vnorm[1]*wR[2]) + lambda*(wR[0] - wL[0]);
+flux[1]=(1./2)*(const_g*H0*wL[0] + const_g*H0*wR[0])+ lambda*(wR[1] - wL[1]) ;
+flux[2]=(1./2)*(const_g*H0*wL[0]+const_g*H0*wR[0]) + lambda*(wR[2] - wL[2]) ;
+
+//essai flux de Godunov
+
+
    /* if (fabs(vnorm[2])>1e-6){ */
    /*   printf("vnds %lf %lf %lf \n",vnorm[0],vnorm[1],vnorm[2]); */
    /* } */

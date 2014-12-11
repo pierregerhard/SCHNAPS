@@ -1,6 +1,11 @@
 #ifndef _MODEL_H
 #define _MODEL_H
 
+//essai
+#define const_g 9.81
+#define H0 0.5
+
+
 //! \brief a unified framework for all physical models
 typedef struct Model{
   //! number of conservative variables

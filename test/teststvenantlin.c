@@ -16,7 +16,7 @@ int main(void) {
   int resu=TestStVenantLin();
 	 
 
-  if (resu) printf("Model test OK !\n");
+  if (!resu) printf("Model test OK !\n");
   else printf("Model test failed !\n");
 
   return !resu;
