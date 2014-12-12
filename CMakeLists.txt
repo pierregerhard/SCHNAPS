@@ -1,3 +1,5 @@
+
+set(CMAKE_LEGACY_CYGWIN_WIN32 0) # Remove when CMake >= 2.8.4 is required
 cmake_minimum_required(VERSION 2.8)
 
 project(schnaps)
@@ -187,3 +189,12 @@ add_executable(
 target_link_libraries( testshallow _schnaps m pthread )
 add_test( testshallow testshallow )        
     
+add_test(testmeq2 testmeq2)
+add_executable(
+  testmeq2
+  test/test.h
+  test/testmeq2.c
+)
+target_link_libraries(testmeq2 _schnaps m pthread)
+add_test(testmeq2 testmeq2)
+
