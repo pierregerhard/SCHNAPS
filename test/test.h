@@ -33,6 +33,6 @@ int TestEuler(void);
 
 int TestStvenantFp(void);
 
-
+int TestmEq2(void);
 
 #endif
