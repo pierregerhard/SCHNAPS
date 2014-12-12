@@ -41,6 +41,8 @@ src/model.c
 src/euler.c
 src/shallow.c
 src/stvenantlin.c
+src/gasdyn77.c
+src/f2c.h
 )
 
 #schnaps library
