@@ -3,7 +3,7 @@
 
 //essai
 #define const_g 9.81
-#define H0 0.5
+#define H0 1.
 
 
 //! \brief a unified framework for all physical models
