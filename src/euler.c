@@ -102,7 +102,11 @@ void EulerInitData2d(double x[3],double w[]){
 
 
 void EulerImposedData(double x[3],double t,double w[]){
-
+  //xi = x[0]/t ;
+  //wL = ...
+  //wR = ...
+  //call riemann (wL,wR,xi, w) 
+	
   double vx =
     Euler_v[0] * x[0] +
     Euler_v[1] * x[1] +
