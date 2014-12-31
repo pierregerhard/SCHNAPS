@@ -18,6 +18,10 @@ const double stvenantlin_v2d[] = {
   ONE_OVER_SQRT_2,
   0};
 
+double vect_norm[]= {
+    0,
+    0
+};
 
 void StVenantLinNumFlux(double wL[],double wR[],double* vnorm,double* flux){
   
@@ -34,6 +38,8 @@ void StVenantLinNumFlux(double wL[],double wR[],double* vnorm,double* flux){
 };
 
 void StVenantLinNumFlux2d(double wL[],double wR[],double* vnorm,double* flux){
+    vect_norm[0] = vnorm[0];
+    vect_norm[1] = vnorm[1];
   /*
   double vn =
     stvenantlin_v2d[0] * vnorm[0] +
@@ -144,8 +150,8 @@ void StVenantLinImposedData2d(double x[3],double t,double w[]){
  w[2]=1.;
 */
 w[0]=0.;
-w[1]=0.;
-w[2]=cos(x[0]);
+w[1]=(-vect_norm[1]/vect_norm[0])*2*x[0];
+w[2]=2*(x[0]);
 
 };
 
