@@ -7,6 +7,7 @@
 #include "global.h"
 #include <math.h>
 #include <pthread.h>
+#include "stvenantlin.h"
 
 // param[0] = M
 // param[1] = deg x
@@ -1284,6 +1285,58 @@ void RK2(Field* f,double tmax){
 
   double vmax=1; // to be changed for another model !!!!!!!!!
   double cfl=0.05;
+
+  double dt = cfl * f->hmin / vmax;
+  int itermax=tmax/dt;
+  int freq=(1 >= itermax/10)? 1 : itermax/10;
+  //int param[8]={f->model.m,_DEGX,_DEGY,_DEGZ,_RAFX,_RAFY,_RAFZ,0};
+  int sizew=f->macromesh.nbelems * f->model.m * NPG(f->interp_param+1);
+
+  int iter=0;
+
+  while(f->tnow<tmax){
+    if (iter%freq==0)
+      printf("t=%f iter=%d/%d dt=%f\n",f->tnow,iter,itermax,dt);
+    // predictor
+    dtField(f);
+
+#ifdef _OPENMP
+#pragma omp parallel for
+#endif
+    for(int iw=0;iw<sizew;iw++){
+      f->wnp1[iw]=f->wn[iw]+ dt/2 * f->dtwn[iw]; 
+    }
+    //exchange the field pointers 
+    double *temp;
+    temp=f->wnp1;
+    f->wnp1=f->wn;
+    f->wn=temp;
+
+    // corrector
+    f->tnow+=dt/2;
+    dtField(f);
+#ifdef _OPENMP
+#pragma omp parallel for
+#endif
+    for(int iw=0;iw<sizew;iw++){
+      f->wnp1[iw]+=dt*f->dtwn[iw];
+    }
+    f->tnow+=dt/2;
+    iter++;
+    //exchange the field pointers 
+    temp=f->wnp1;
+    f->wnp1=f->wn;
+    f->wn=temp;
+
+  }
+  printf("t=%f iter=%d/%d dt=%f\n",f->tnow,iter,itermax,dt);
+
+}
+
+void RK2StVenantLin(Field* f,double tmax){
+  printf("RK2StVenantLin\n");
+  double vmax=sqrt(const_g*H0); // to be changed for another model !!!!!!!!!
+  double cfl=0.2/vmax;
 
   double dt = cfl * f->hmin / vmax;
   int itermax=tmax/dt;
