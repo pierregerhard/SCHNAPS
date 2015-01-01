@@ -109,6 +109,9 @@ void* DGMass(void* mcell);
 //! \param[inout] f a field
 //! \param[in] tmax physical duration of the simulation
 void RK2(Field* f,double tmax);
+
+void RK2StVenantLin(Field* f,double tmax);
+
 //!  \brief time integration by a second order Runge-Kutta algorithm.
 //! slow version
 //! \param[inout] f a field

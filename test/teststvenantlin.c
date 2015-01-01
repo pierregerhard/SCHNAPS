@@ -16,7 +16,7 @@ int main(void) {
   int resu=TestStVenantLin();
 	 
 
-  if (resu) printf("Model test OK !\n");
+  if (!resu) printf("Model test OK !\n");
   else printf("Model test failed !\n");
 
   return !resu;
@@ -68,7 +68,7 @@ int TestStVenantLin(void){
   // apply the DG scheme
   // time integration by RK2 scheme 
   // up to final time = 1.
-  RK2(&f,1.);
+  RK2StVenantLin(&f,0.5);//1.);
  
   // save the results and the error
   PlotField(0,(1==0),&f,"dgvisustvenantlin.msh");
