@@ -20,6 +20,7 @@ const double stvenantlin_v2d[] = {
 
 double vect_norm[]= {
     0,
+    0,
     0
 };
 
@@ -62,9 +63,9 @@ void StVenantLinNumFlux2d(double wL[],double wR[],double* vnorm,double* flux){
 double lambda= sqrt(const_g*H0*(vnorm[0]*vnorm[0]+vnorm[1]*vnorm[1])) ; 
 
 
-flux[0]=(1./2)*(vnorm[0]*wL[1]    + vnorm[1]*wL[2]    + vnorm[0]*wR[1] + vnorm[1]*wR[2]) - lambda*(wR[0] - wL[0]);
-flux[1]=(1./2)*(const_g*H0*wL[0]  + const_g*H0*wR[0]) - lambda*(wR[1] - wL[1]) ;
-flux[2]=(1./2)*(const_g*H0*wL[0]  + const_g*H0*wR[0]) - lambda*(wR[2] - wL[2]) ;
+flux[0]=(1./2)*(vnorm[0]*wL[1]    + vnorm[1]*wL[2]    + vnorm[0]*wR[1] + vnorm[1]*wR[2]) - (lambda/2)*(wR[0] - wL[0]);
+flux[1]=(1./2)*(const_g*H0*wL[0]  + const_g*H0*wR[0])*vnorm[0] - (lambda/2)*(wR[1] - wL[1]) ;
+flux[2]=(1./2)*(const_g*H0*wL[0]  + const_g*H0*wR[0])*vnorm[1] - (lambda/2)*(wR[2] - wL[2]) ;
 
 
 
@@ -136,23 +137,23 @@ void StVenantLinImposedData(double x[3],double t,double w[]){
  };
 
 void StVenantLinImposedData2d(double x[3],double t,double w[]){
+
+// onde de direction x
+// essai avec la solution exacte lorsqu'on prend la valeur propre sqrt(const_g H0)
+double val = sqrt(const_g*H0) ; 
+
+w[0] = (1/sqrt(const_g*H0))*(x[0]-val*t);
+w[1] = (x[0]-val*t);
+w[2] = 0 ; 
+
 /*
-  double vx =
-    stvenantlin_v2d[0] * x[0] +
-    stvenantlin_v2d[1] * x[1] +
-    stvenantlin_v2d[2] * x[2];
+// onde en biais
+double val = x[0]*vect_norm[0] + x[1]*vect_norm[1] - sqrt(const_g*H0*(vect_norm[0]*vect_norm[0] + vect_norm[1]*vect_norm[1]))*t;
 
-  double xx = vx - t;
-
- // w[0]=cos(xx);
- w[0]=1.;
- w[1]=1.;
- w[2]=1.;
+w[0] = (vect_norm[0]*vect_norm[0] + vect_norm[1]*vect_norm[1])/(vect_norm[1]*sqrt(const_g*H0*(vect_norm[0]*vect_norm[0] + vect_norm[1]*vect_norm[1])))*val;
+w[1] = (vect_norm[0]/vect_norm[1])*val;
+w[2] = val;
 */
-w[0]=0.;
-w[1]=(-vect_norm[1]/vect_norm[0])*2*x[0];
-w[2]=2*(x[0]);
-
 };
 
 void TestStVenantLinBoundaryFlux(double x[3],double t,double wL[],double* vnorm,
