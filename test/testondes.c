@@ -27,7 +27,7 @@ int main(void) {
 
 int TestWaves (void){
   Field f;
-  f.model.m=3; // only one conservative variable
+  f.model.m=3; // three conservative variable
   f.model.NumFlux=WavesNumFlux2d;
   f.model.BoundaryFlux=WavesBoundaryFlux2d;
   f.model.InitData=WavesInitData2d;
@@ -39,8 +39,8 @@ int TestWaves (void){
   f.interp.interp_param[1]=3;  // x direction degree
   f.interp.interp_param[2]=3;  // y direction degree
   f.interp.interp_param[3]=0;  // z direction degree
-  f.interp.interp_param[4]=2;  // x direction refinement
-  f.interp.interp_param[5]=2;  // y direction refinement
+  f.interp.interp_param[4]=3;  // x direction refinement
+  f.interp.interp_param[5]=3;  // y direction refinement
   f.interp.interp_param[6]=1;  // z direction refinement
 
 
@@ -69,7 +69,7 @@ int TestWaves (void){
   // apply the DG scheme
   // time integration by RK2 scheme 
   // up to final time = 1.
-  RK2(&f,1.);
+  RK2(&f,7.);
  
   // save the results and the error
   PlotField(0,(1==0),&f,"dgvisu.msh");
