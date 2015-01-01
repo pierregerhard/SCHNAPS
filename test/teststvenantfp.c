@@ -2,8 +2,8 @@
 //#include "geometry.h"
 //#include "interpolation.h"
 #include "test.h"
-#include "stvenantfp.h"
-//#include "field.h"
+#include "stvenantlin.h"
+#include "field.h"
 
 #include <stdio.h>
 #include <math.h>
@@ -24,33 +24,61 @@ int main(void) {
 
 int TestStvenantFp(void){
 
-  int test= (1==1);
-  // creation of a simple shallow water model
-  Model tr;
-  tr.m=1; // only one conservative variable
-  tr.NumFlux=TransportNumFlux;
-  tr.BoundaryFlux=TestTransportBoundaryFlux;
-  tr.InitData=TestTransportInitData;
-  tr.ImposedData=TestTransportImposedData;
 
-  double wL[tr.m];
-  double wR[tr.m];
-  double flux1[tr.m],flux2[tr.m];
+  Field f;
+  f.model.m=1; // only one conservative variable
+  f.model.NumFlux=StvenantFpNumFlux;
+  f.model.BoundaryFlux=StvenantFpBoundaryFlux;
+  f.model.InitData=StvenantFpInitData;
+  f.model.ImposedData=StvenantFpImposedData;
+  f.varindex=GenericVarindex;
 
-  double x[3]={1,1,2};
-  double t=0;
-  double vn[3]={1/sqrt(3),1/sqrt(3),-1/sqrt(3)};
 
-  tr.InitData(x,wR);
-  tr.NumFlux(wL,wR,vn,flux1);
-  printf("NumFlux %f \n",flux1[0]);
-  tr.BoundaryFlux(x,t,wL,vn,flux2);
-  printf("BoundaryFlux %f \n",flux2[0]);
+  f.interp.interp_param[0]=3;  // _M
+  f.interp.interp_param[1]=3;  // x direction degree
+  f.interp.interp_param[2]=3;  // y direction degree
+  f.interp.interp_param[3]=0;  // z direction degree
+  f.interp.interp_param[4]=2;  // x direction refinement
+  f.interp.interp_param[5]=2;  // y direction refinement
+  f.interp.interp_param[6]=1;  // z direction refinement
 
-  double err=fabs(flux2[0]-flux1[0]);
 
-  test=(err < 1e-8);
+  // read the gmsh file
+  ReadMacroMesh(&(f.macromesh),"disque.msh");
+  // try to detect a 2d mesh
+  bool is2d=Detect2DMacroMesh(&(f.macromesh));
+  assert(is2d);
 
-  return test;
+  // mesh preparation
+  BuildConnectivity(&(f.macromesh));
+
+  //AffineMapMacroMesh(&(f.macromesh));
+ 
+  // prepare the initial fields
+  InitField(&f);
+  f.is2d=true;
+
+
+  // prudence...
+  CheckMacroMesh(&(f.macromesh),f.interp.interp_param+1);
+
+  printf("cfl param =%f\n",f.hmin);
+
+
+  // apply the DG scheme
+  // time integration by RK2 scheme 
+  // up to final time = 1.
+  RK2(&f,1.);
+ 
+  // save the results and the error
+  PlotField(0,(1==0),&f,"dgvisustvenantlin.msh");
+  PlotField(0,(1==1),&f,"dgerrorstvenantlin.msh");
+
+  double dd=L2error(&f);
+
+  printf("erreur L2=%f\n",dd);
+  return 0;
 
 };
+
+

@@ -86,6 +86,14 @@ add_executable(
 target_link_libraries(testmodel _schnaps m pthread)
 
 add_executable(
+  bottomflat
+  test/test.h
+  test/teststvenantfp.c
+)
+target_link_libraries(bottomflat _schnaps m pthread)
+add_test(testbottomflat testbottomflat)
+
+add_executable(
   teststvenantlin
   test/test.h
   test/teststvenantlin.c

@@ -1,4 +1,3 @@
-#include "model.h"
 #include "stvenantfp.h"
 #include <math.h>
 #include <stdio.h>
@@ -58,28 +57,27 @@ void StvenantFpNumFlux2d(double wL[],double wR[],double* vnorm,double* flux){
 void StvenantFpBoundaryFlux(double x[3],double t,double wL[],double* vnorm,
 			   double* flux){
   double wR[1];
-  TransportImposedData(x,t,wR);
-  TransportNumFlux(wL,wR,vnorm,flux);
+  StvenantFpImposedData(x,t,wR);
+  StvenantFpNumFlux(wL,wR,vnorm,flux);
 };
 
 void StvenantFpBoundaryFlux2d(double x[3],double t,double wL[],double* vnorm,
 			   double* flux){
   double wR[1];
-  TransportImposedData2d(x,t,wR);
-  TransportNumFlux2d(wL,wR,vnorm,flux);
+  StvenantFpImposedData2d(x,t,wR);
+  StvenantFpNumFlux2d(wL,wR,vnorm,flux);
 };
 
 void StvenantFpInitData(double x[3],double w[]){
 
   double t=0;
-  TransportImposedData(x,t,w);
-
+  StvenantFpImposedData(x,t,w);
 };
 
 void StvenantFpInitData2d(double x[3],double w[]){
 
   double t=0;
-  TransportImposedData2d(x,t,w);
+  StvenantFpImposedData2d(x,t,w);
 
 };
 
@@ -111,21 +109,21 @@ void StvenantFpImposedData2d(double x[3],double t,double w[]){
 void TestStvenantFpBoundaryFlux(double x[3],double t,double wL[],double* vnorm,
 			   double* flux){
   double wR[1];
-  TestTransportImposedData(x,t,wR);
-  TransportNumFlux(wL,wR,vnorm,flux);
+  TestStvenantFpImposedData(x,t,wR);
+  StvenantFpNumFlux(wL,wR,vnorm,flux);
 };
 
 void TestStvenantFpBoundaryFlux2d(double x[3],double t,double wL[],double* vnorm,
 			   double* flux){
   double wR[1];
-  TestTransportImposedData2d(x,t,wR);
-  TransportNumFlux2d(wL,wR,vnorm,flux);
+  TestStvenantFpImposedData2d(x,t,wR);
+  StvenantFpNumFlux2d(wL,wR,vnorm,flux);
 };
 
 void TestStvenantFpInitData(double x[3],double w[]){
 
   double t=0;
-  TestTransportImposedData(x,t,w);
+  TestStvenantFpImposedData(x,t,w);
 
 };
 
@@ -133,7 +131,7 @@ void TestStvenantFpInitData(double x[3],double w[]){
 void TestStvenantFpInitData2d(double x[3],double w[]){
 
   double t=0;
-  TestTransportImposedData2d(x,t,w);
+  TestStvenantFpImposedData2d(x,t,w);
 
 };
 
