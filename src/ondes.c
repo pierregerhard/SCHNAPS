@@ -171,11 +171,28 @@ void WavesImposedData(double x[3],double t,double w[]){
 void WavesImposedData2d(double x[3],double t,double w[]){
 
 // utilise waves_norm pour la solution exacte ( ici r=[1/sqrt(2) n1/(sqrt(2)sqrt(n1^2+n2^2)) n2/(sqrt(2)sqrt(n1^2+n2^2)) ]T et sqrt(n1^2+n2^2)=1
+ 
+
+/*
   w[0]=cos(waves_norm[0]*x[0]+waves_norm[1]*x[1]-t)/sqrt(2);
   w[1]=waves_norm[0]*cos(waves_norm[0]*x[0]+waves_norm[1]*x[1]-t)/sqrt(2);
   w[2]=waves_norm[1]*cos(waves_norm[0]*x[0]+waves_norm[1]*x[1]-t)/sqrt(2);
+*/
 
-  
+
+
+ w[0]=(x[0]+x[1]-2*t);
+ w[1]=-(x[0]-t);
+ w[2]=-(x[1]-t);
+
+
+/*
+ w[0]=1;
+ w[1]=1;
+ w[2]=1;
+
+*/
+
 };
 
 void TestWavesBoundaryFlux(double x[3],double t,double wL[],double* vnorm,
@@ -236,6 +253,8 @@ void TestWavesImposedData2d(double x[3],double t,double w[]){
   w[0]=0;
   w[1]=(-1*waves_norm[1]/waves_norm[0])*cos(waves_norm[0]*x[0]+waves_norm[1]*x[1]-t);
   w[2]=cos(waves_norm[0]*x[0]+waves_norm[1]*x[1]-t);
-  
+
+
+
 
 };
