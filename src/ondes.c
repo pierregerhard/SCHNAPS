@@ -180,11 +180,23 @@ void WavesImposedData2d(double x[3],double t,double w[]){
 */
 
 
-
- w[0]=cos(4*x[0]-2*t)-cos(4*x[1]-4*t);
+/*
+ w[0]=cos(4*x[0]-4*t)-cos(4*x[1]-4*t);
  w[1]=-cos(4*x[0]-4*t);
  w[2]=cos(4*x[1]-4*t);
+ */
 
+
+ w[0]=cos(4*(x[0]-x[1])/sqrt(2)+4*t);
+ w[1]=cos(4*(x[0]-x[1])/sqrt(2)+4*t)/sqrt(2);
+ w[2]=-cos(4*(x[0]-x[1])/sqrt(2)+4*t)/sqrt(2);
+
+
+/*
+ w[0]=cos(3*(x[0]-x[1])/sqrt(2)+3*t)+cos(3*(x[0]-x[1])/sqrt(2)-3*t);
+ w[1]=cos(3*(x[0]-x[1])/sqrt(2)+3*t)/sqrt(2)-cos(3*(x[0]-x[1])/sqrt(2)-3*t)/sqrt(2);
+ w[2]=-cos(3*(x[0]-x[1])/sqrt(2)+3*t)/sqrt(2)+cos(3*(x[0]-x[1])/sqrt(2)-3*t)/sqrt(2);
+*/
 
 /*
  w[0]=1;
