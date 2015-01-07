@@ -3,7 +3,7 @@
 
 //essai
 #define const_g 9.81
-#define H0 1.
+#define H0 0.01 
 
 
 //! \brief particular flux for the StVenantLin model

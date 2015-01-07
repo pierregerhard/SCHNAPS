@@ -39,6 +39,7 @@ void StVenantLinNumFlux(double wL[],double wR[],double* vnorm,double* flux){
 };
 
 void StVenantLinNumFlux2d(double wL[],double wR[],double* vnorm,double* flux){
+// rafraichissement vecteur normal
     vect_norm[0] = vnorm[0];
     vect_norm[1] = vnorm[1];
   /*
@@ -62,11 +63,9 @@ void StVenantLinNumFlux2d(double wL[],double wR[],double* vnorm,double* flux){
 
 double lambda= sqrt(const_g*H0*(vnorm[0]*vnorm[0]+vnorm[1]*vnorm[1])) ; 
 
-
 flux[0]=(1./2)*(vnorm[0]*wL[1]    + vnorm[1]*wL[2]    + vnorm[0]*wR[1] + vnorm[1]*wR[2]) - (lambda/2)*(wR[0] - wL[0]);
 flux[1]=(1./2)*(const_g*H0*wL[0]  + const_g*H0*wR[0])*vnorm[0] - (lambda/2)*(wR[1] - wL[1]) ;
 flux[2]=(1./2)*(const_g*H0*wL[0]  + const_g*H0*wR[0])*vnorm[1] - (lambda/2)*(wR[2] - wL[2]) ;
-
 
 
 //essai flux de Godunov
@@ -140,27 +139,29 @@ void StVenantLinImposedData2d(double x[3],double t,double w[]){
 
 // onde de direction x
 // essai avec la solution exacte lorsqu'on prend la valeur propre sqrt(const_g H0)
+/*
 double val = sqrt(const_g*H0) ; 
 
 w[0] = (1/sqrt(const_g*H0))*(x[0]-val*t);
 w[1] = (x[0]-val*t);
 w[2] = 0 ; 
-
-/*
-// onde en biais
-double val = x[0]*vect_norm[0] + x[1]*vect_norm[1] - sqrt(const_g*H0*(vect_norm[0]*vect_norm[0] + vect_norm[1]*vect_norm[1]))*t;
-
-w[0] = (vect_norm[0]*vect_norm[0] + vect_norm[1]*vect_norm[1])/(vect_norm[1]*sqrt(const_g*H0*(vect_norm[0]*vect_norm[0] + vect_norm[1]*vect_norm[1])))*val;
-w[1] = (vect_norm[0]/vect_norm[1])*val;
-w[2] = val;
 */
+
+// onde en biais
+
+double val = x[0]*(1) + x[1]*(-1) - sqrt(const_g*H0*(1))*t;
+
+w[0] = val ;
+w[1] = (vect_norm[0]*const_g*H0*val)/sqrt(const_g*H0*(1));
+w[2] = (vect_norm[1]*const_g*H0*val)/sqrt(const_g*H0*(1));
+
 };
 
 void TestStVenantLinBoundaryFlux(double x[3],double t,double wL[],double* vnorm,
 			   double* flux){
   double wR[1];
   TestStVenantLinImposedData(x,t,wR);
-  StVenantLinNumFlux(wL,wR,vnorm,flux);
+  StVenantLinNumFlux(wL,wR,vnorm,flux); 
 };
 
 void TestStVenantLinBoundaryFlux2d(double x[3],double t,double wL[],double* vnorm,
