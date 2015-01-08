@@ -2,7 +2,7 @@
 //#include "geometry.h"
 //#include "interpolation.h"
 #include "test.h"
-#include "ondes.h"
+#include "waves.h"
 #include "field.h"
 
 #include <stdio.h>
@@ -27,7 +27,7 @@ int main(void) {
 
 int TestWaves (void){
   Field f;
-  f.model.m=3; // only one conservative variable
+  f.model.m=3; // three conservative variable
   f.model.NumFlux=WavesNumFlux2d;
   f.model.BoundaryFlux=WavesBoundaryFlux2d;
   f.model.InitData=WavesInitData2d;
@@ -39,8 +39,8 @@ int TestWaves (void){
   f.interp.interp_param[1]=3;  // x direction degree
   f.interp.interp_param[2]=3;  // y direction degree
   f.interp.interp_param[3]=0;  // z direction degree
-  f.interp.interp_param[4]=2;  // x direction refinement
-  f.interp.interp_param[5]=2;  // y direction refinement
+  f.interp.interp_param[4]=4;  // x direction refinement
+  f.interp.interp_param[5]=4;  // y direction refinement
   f.interp.interp_param[6]=1;  // z direction refinement
 
 
