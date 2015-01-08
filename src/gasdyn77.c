@@ -9,6 +9,8 @@
 
 		http://www.netlib.org/f2c/libf2c.zip
 */
+//#include "f2c.h"
+#include "gasdyn77.h"
 #include "f2c.h"
 /* Table of constant values */
 
