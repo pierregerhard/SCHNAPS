@@ -7,6 +7,7 @@
 #include "global.h"
 #include <math.h>
 #include <pthread.h>
+#include "stvenantlin.h"
 
 // param[0] = M
 // param[1] = deg x
@@ -820,7 +821,7 @@ void* DGVolume(void* mc){
 	  double *xref1 = malloc(sc_npg * sizeof(double));
 	  double *xref2 = malloc(sc_npg * sizeof(double));
 	  double *omega = malloc(sc_npg * sizeof(double));
-	  int *imems = malloc(m * sc_npg * sizeof(double*));
+	  int *imems = malloc(m * sc_npg * sizeof(int));
 	  int pos=0;
 	  for(unsigned int p=0; p < sc_npg; ++p) {
 	    double xref[3];
@@ -849,7 +850,7 @@ void* DGVolume(void* mc){
 		  int ipgL=offsetL+p[0]+npg[0]*(p[1]+npg[1]*p[2]);
 		  for(int iv=0; iv < m; iv++){
 		    ///int imemL=f->varindex(f_interp_param,ie,ipgL,iv);
-		    wL[iv] = f->wn[imems[ipgL-offsetL+iv]];
+		    wL[iv] = f->wn[imems[m*(ipgL-offsetL)+iv]]; /// big bug !!!!
 
 		    //wL[iv] = f->wn[imemL];
 		  }
@@ -885,7 +886,7 @@ void* DGVolume(void* mc){
 		    int ipgR=offsetL+q[0]+npg[0]*(q[1]+npg[1]*q[2]);
 		    for(int iv=0; iv < m; iv++){
 		      //int imemR=f->varindex(f_interp_param,ie,ipgR,iv);
-		      f->dtwn[imems[ipgR-offsetL+iv]]+=flux[iv]*wpgL;
+		      f->dtwn[imems[m*(ipgR-offsetL)+iv]]+=flux[iv]*wpgL;
 		    }
 		  } // iq
 		} // p2
@@ -1048,6 +1049,9 @@ void dtField(Field* f){
     pthread_join(tmcell[ie], NULL);
   }
 
+  //DisplayField(f);
+  //assert(1==2);
+
   for(int ie=0;ie<f->macromesh.nbelems;ie++){
     status=pthread_create (&(tmcell[ie]),   // thread
 			   NULL,                   // default attributes
@@ -1070,8 +1074,8 @@ void dtField(Field* f){
   for(int ie=0; ie < f->macromesh.nbelems; ++ie) {
     DGMacroCellInterface((void*) (mcell+ie));
     DGSubCellInterface((void*) (mcell+ie));
-    DGVolume((void*) (mcell+ie));
-    DGMass((void*) (mcell+ie));
+     DGVolume((void*) (mcell+ie)); 
+    DGMass((void*) (mcell+ie)); 
   }
   
 #endif
@@ -1283,12 +1287,11 @@ void RK2(Field* f,double tmax){
   double cfl=0.05;
 
   double dt = cfl * f->hmin / vmax;
-  int itermax=tmax/dt+1;
-  int freq=itermax/10;
-
+  int itermax=tmax/dt;
+  int freq=(1 >= itermax/10)? 1 : itermax/10;
   //int param[8]={f->model.m,_DEGX,_DEGY,_DEGZ,_RAFX,_RAFY,_RAFZ,0};
   int sizew=f->macromesh.nbelems * f->model.m * NPG(f->interp_param+1);
- 
+
   int iter=0;
 
   while(f->tnow<tmax){
@@ -1296,6 +1299,59 @@ void RK2(Field* f,double tmax){
       printf("t=%f iter=%d/%d dt=%f\n",f->tnow,iter,itermax,dt);
     // predictor
     dtField(f);
+
+#ifdef _OPENMP
+#pragma omp parallel for
+#endif
+    for(int iw=0;iw<sizew;iw++){
+      f->wnp1[iw]=f->wn[iw]+ dt/2 * f->dtwn[iw]; 
+    }
+    //exchange the field pointers 
+    double *temp;
+    temp=f->wnp1;
+    f->wnp1=f->wn;
+    f->wn=temp;
+
+    // corrector
+    f->tnow+=dt/2;
+    dtField(f);
+#ifdef _OPENMP
+#pragma omp parallel for
+#endif
+    for(int iw=0;iw<sizew;iw++){
+      f->wnp1[iw]+=dt*f->dtwn[iw];
+    }
+    f->tnow+=dt/2;
+    iter++;
+    //exchange the field pointers 
+    temp=f->wnp1;
+    f->wnp1=f->wn;
+    f->wn=temp;
+
+  }
+  printf("t=%f iter=%d/%d dt=%f\n",f->tnow,iter,itermax,dt);
+
+}
+
+void RK2StVenantLin(Field* f,double tmax){
+  printf("RK2StVenantLin\n");
+  double vmax=sqrt(const_g*H0); // to be changed for another model !!!!!!!!!
+  double cfl=0.2/vmax;
+
+  double dt = cfl * f->hmin / vmax;
+  int itermax=tmax/dt;
+  int freq=(1 >= itermax/10)? 1 : itermax/10;
+  //int param[8]={f->model.m,_DEGX,_DEGY,_DEGZ,_RAFX,_RAFY,_RAFZ,0};
+  int sizew=f->macromesh.nbelems * f->model.m * NPG(f->interp_param+1);
+
+  int iter=0;
+
+  while(f->tnow<tmax){
+    if (iter%freq==0)
+      printf("t=%f iter=%d/%d dt=%f\n",f->tnow,iter,itermax,dt);
+    // predictor
+    dtField(f);
+
 #ifdef _OPENMP
 #pragma omp parallel for
 #endif
