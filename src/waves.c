@@ -1,4 +1,4 @@
-#include "ondes.h"
+#include "waves.h"
 #include <math.h>
 #include <stdio.h>
 #include <assert.h>
@@ -138,6 +138,12 @@ void WavesBoundaryFlux2d(double x[3],double t,double wL[],double* vnorm,
 			   double* flux){
   double wR[3];
   WavesImposedData2d(x,t,wR);
+  if(x[0]*x[0]+x[1]*x[1]==1)
+  {
+      wR[0]=wL[0];
+      wR[1]=wL[1]-2*(wL[1]*vnorm[0]+wL[2]*vnorm[1])*vnorm[0];
+      wR[2]=wL[2]-2*(wL[1]*vnorm[0]+wL[2]*vnorm[1])*vnorm[1];
+  }
   WavesNumFlux2d(wL,wR,vnorm,flux);
 };
 
@@ -181,15 +187,21 @@ void WavesImposedData2d(double x[3],double t,double w[]){
 
 
 /*
- w[0]=cos(4*x[0]-4*t)-cos(4*x[1]-4*t);
- w[1]=-cos(4*x[0]-4*t);
- w[2]=cos(4*x[1]-4*t);
- */
+ w[0]=(x[0]-t);
+ w[1]=-(x[0]-t);
+ w[2]=0;//cos(4*x[1]-4*t);
+*/
 
-
+/*
  w[0]=cos(4*(x[0]-x[1])/sqrt(2)+4*t);
  w[1]=cos(4*(x[0]-x[1])/sqrt(2)+4*t)/sqrt(2);
  w[2]=-cos(4*(x[0]-x[1])/sqrt(2)+4*t)/sqrt(2);
+*/
+
+
+ w[0]=cos(x[0]+x[1]-t)/sqrt(2);
+ w[1]=waves_norm[0]*cos(x[0]+x[1]-t)/sqrt(2);
+ w[2]=waves_norm[1]*cos(x[0]+x[1]-t)/sqrt(2);
 
 
 /*

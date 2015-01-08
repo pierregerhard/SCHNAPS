@@ -2,7 +2,7 @@
 //#include "geometry.h"
 //#include "interpolation.h"
 #include "test.h"
-#include "ondes.h"
+#include "waves.h"
 #include "field.h"
 
 #include <stdio.h>

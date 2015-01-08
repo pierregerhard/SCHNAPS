@@ -30,16 +30,16 @@ src/h20phi.h
 src/interpolation.h
 src/macromesh.h
 src/model.h
-src/ondes.h
+src/waves.h
 src/shallow.h
 src/euler.h
-src/ondes.c
 src/stvenantlin.h
 src/field.c
 src/geometry.c
 src/interpolation.c
 src/macromesh.c
 src/model.c
+src/waves.c
 src/euler.c
 src/shallow.c
 src/stvenantlin.c
@@ -126,7 +126,7 @@ add_test(testwaves testwaves)
 add_executable(
   testwaves
   test/test.h
-  test/testondes.c
+  test/testwaves.c
 )
 target_link_libraries(testwaves _schnaps m pthread)
 
