@@ -65,28 +65,13 @@ void WavesNumFlux2d(double wL[],double wR[],double* vnorm,double* flux){
     A[2][1]=0;
     A[2][2]=0;
 
-/*
-    double gc=9.81;
-    double H=0.5;
-    double A[3][3];
-    A[0][0]=0;
-    A[0][1]=n1;
-    A[0][2]=n2;
-    A[1][0]=n1*gc*H;
-    A[1][1]=0;
-    A[1][2]=0;
-    A[2][0]=n2*gc*H;
-    A[2][1]=0;
-    A[2][2]=0;
-*/
-
     //Rusanov numerical flux
 
    
     flux[0]=(A[0][0]*(wL[0]+wR[0])+A[0][1]*(wL[1]+wR[1])+A[0][2]*(wL[2]+wR[2]))/2 - s/2*(wR[0]-wL[0]);
     flux[1]=(A[1][0]*(wL[0]+wR[0])+A[1][1]*(wL[1]+wR[1])+A[1][2]*(wL[2]+wR[2]))/2 - s/2*(wR[1]-wL[1]);
     flux[2]=(A[2][0]*(wL[0]+wR[0])+A[2][1]*(wL[1]+wR[1])+A[2][2]*(wL[2]+wR[2]))/2 - s/2*(wR[2]-wL[2]);
-    
+   
 
     // Matrix A.n(-)
 
@@ -121,9 +106,9 @@ void WavesNumFlux2d(double wL[],double wR[],double* vnorm,double* flux){
     flux[0]=AM[0][0]*wR[0]+AM[0][1]*wR[1]+AM[0][2]*wR[2]+AP[0][0]*wL[0]+AP[0][1]*wL[1]+AP[0][2]*wL[2];
     flux[1]=AM[1][0]*wR[0]+AM[1][1]*wR[1]+AM[1][2]*wR[2]+AP[1][0]*wL[0]+AP[1][1]*wL[1]+AP[1][2]*wL[2];
     flux[2]=AM[2][0]*wR[0]+AM[2][1]*wR[1]+AM[2][2]*wR[2]+AP[2][0]*wL[0]+AP[2][1]*wL[1]+AP[2][2]*wL[2];
-*/
-    assert(fabs(vnorm[2])<1e-8);
 
+    assert(fabs(vnorm[2])<1e-8);
+*/
 
 };
 
@@ -176,38 +161,30 @@ void WavesImposedData(double x[3],double t,double w[]){
 
 void WavesImposedData2d(double x[3],double t,double w[]){
 
-// utilise waves_norm pour la solution exacte ( ici r=[1/sqrt(2) n1/(sqrt(2)sqrt(n1^2+n2^2)) n2/(sqrt(2)sqrt(n1^2+n2^2)) ]T et sqrt(n1^2+n2^2)=1
- 
-
-/*
-  w[0]=cos(waves_norm[0]*x[0]+waves_norm[1]*x[1]-t)/sqrt(2);
-  w[1]=waves_norm[0]*cos(waves_norm[0]*x[0]+waves_norm[1]*x[1]-t)/sqrt(2);
-  w[2]=waves_norm[1]*cos(waves_norm[0]*x[0]+waves_norm[1]*x[1]-t)/sqrt(2);
-*/
-
-
+// Onde vers x
 /*
  w[0]=(x[0]-t);
  w[1]=-(x[0]-t);
  w[2]=0;//cos(4*x[1]-4*t);
 */
 
-/*
+// Onde en biais
+
  w[0]=cos(4*(x[0]-x[1])/sqrt(2)+4*t);
  w[1]=cos(4*(x[0]-x[1])/sqrt(2)+4*t)/sqrt(2);
  w[2]=-cos(4*(x[0]-x[1])/sqrt(2)+4*t)/sqrt(2);
-*/
-
-
- w[0]=cos(x[0]+x[1]-t)/sqrt(2);
- w[1]=waves_norm[0]*cos(x[0]+x[1]-t)/sqrt(2);
- w[2]=waves_norm[1]*cos(x[0]+x[1]-t)/sqrt(2);
 
 
 /*
- w[0]=cos(3*(x[0]-x[1])/sqrt(2)+3*t)+cos(3*(x[0]-x[1])/sqrt(2)-3*t);
- w[1]=cos(3*(x[0]-x[1])/sqrt(2)+3*t)/sqrt(2)-cos(3*(x[0]-x[1])/sqrt(2)-3*t)/sqrt(2);
- w[2]=-cos(3*(x[0]-x[1])/sqrt(2)+3*t)/sqrt(2)+cos(3*(x[0]-x[1])/sqrt(2)-3*t)/sqrt(2);
+ w[0]=cos(x[0]+x[1]-t)/sqrt(2);
+ w[1]=-waves_norm[0]*cos(x[0]+x[1]-t)/sqrt(2);
+ w[2]=-waves_norm[1]*cos(x[0]+x[1]-t)/sqrt(2);
+*/
+
+/*
+ w[0]=(3*(x[0]-x[1])/sqrt(2)+3*t)+(3*(x[0]-x[1])/sqrt(2)-3*t);
+ w[1]=(3*(x[0]-x[1])/sqrt(2)+3*t)/sqrt(2)+(3*(x[0]-x[1])/sqrt(2)-3*t)/sqrt(2);
+ w[2]=-(3*(x[0]-x[1])/sqrt(2)+3*t)/sqrt(2)-(3*(x[0]-x[1])/sqrt(2)-3*t)/sqrt(2);
 */
 
 /*
@@ -262,17 +239,6 @@ void TestWavesImposedData(double x[3],double t,double w[]){
 };
 
 void TestWavesImposedData2d(double x[3],double t,double w[]){
-
-/*
-  double vx =
-    waves_v2d[0] * x[0] +
-    waves_v2d[1] * x[1] +
-    waves_v2d[2] * x[2];
-
-  double xx = vx - t;
-
-  w[0]=xx*xx;
-  */
 
   w[0]=0;
   w[1]=(-1*waves_norm[1]/waves_norm[0])*cos(waves_norm[0]*x[0]+waves_norm[1]*x[1]-t);
