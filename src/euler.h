@@ -1,5 +1,9 @@
 #ifndef _EULER_H
 #define _EULER_H
+#include "f2c.h"
+#include "gasdyn77.h"
+
+#define GAMMA 2
 
 //! \brief particular flux for the Euler model
 //! \param[in] wL,wR : left and right states
@@ -78,4 +82,5 @@ void TestEulerImposedData(double* x,double t,double* w);
 void TestEulerImposedData2d(double* x,double t,double* w);
 
 
+void riemann (double * wL, double * wR, double xi, double * w) ;
 #endif

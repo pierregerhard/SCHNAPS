@@ -18,6 +18,9 @@ const double Euler_v2d[] = {
   ONE_OVER_SQRT_2,
   0};
 
+double WL [] = {0, 0, 0, 0} ;
+double WR [] = {0, 0, 0, 0} ;
+
 void EulerNumFlux(double wL[],double wR[],double* vnorm,double* flux){
   
   double vn =
@@ -43,33 +46,31 @@ void EulerNumFlux(double wL[],double wR[],double* vnorm,double* flux){
 };
 
 void EulerNumFlux2d(double wL[],double wR[],double* vnorm,double* flux){
-  
-  double vn =
-    Euler_v2d[0] * vnorm[0] +
-    Euler_v2d[1] * vnorm[1] +
-    Euler_v2d[2] * vnorm[2];
+  WL[0] = wL[0] ;
+  WL[1] = wL[1] ;
+  WL[2] = wL[2] ;
+  WL[3] = wL[3] ;
+  WR[0] = wR[0] ;
+  WR[1] = wR[1] ;
+  WR[2] = wR[2] ;
+  WR[3] = wR[3] ;
+  double lambda_max = sqrt(wL[1]*wL[1]/wL[0]/wL[0]) + sqrt (GAMMA*wL[0]) ;
+   
+   flux[0] = (wL[1]*vnorm[0] + wL[2]*vnorm[1] 
+   		   + wR[1]*vnorm[0] + wR[2] *vnorm[1])/2 
+		   - lambda_max*(wR[0]-wL[0])  ; 
 
-   double vnp = vn>0 ? vn : 0;
-   double vnm = vn-vnp;
+   flux[1] = ((wL[1]*wL[1]/wL[0] + wL[0]*wL[0])*vnorm[0] + wL[1]*wL[2]/wL[0]*vnorm[1] 
+   		   +  (wR[1]*wR[1]/wR[0] + wR[0]*wR[0])*vnorm[0] + wR[1]*wR[2]/wR[0]*vnorm[1])/2 
+		   - lambda_max*(wR[1]-wL[1])   ;
 
-   //flux[0] = vnp * wL[0] + vnm * wR[0];
-   /* if (fabs(vnorm[2])>1e-6){ */
-   /*   printf("vnds %lf %lf %lf \n",vnorm[0],vnorm[1],vnorm[2]); */
-   /* } */
-   // verify that 2d computations are actually
-   // activated
-   //assert(fabs(vnorm[2])<1e-8);
-   /*
-   flux[0] = vnp * wL[0] + vnm * wR[0];
-   flux[1] = vnp * wL[1] + vnm * wR[1];
-   flux[2] = vnp * wL[2] + vnm * wR[2];
-   flux[3] = vnp * wL[3] + vnm * wR[3];
-   */
-   flux[0] = 0. ; 
-   flux[1] = 0.;
-   flux[2] = 0. ;
-   flux[3] = 0. ;
+   flux[2] = (wL[1]*wL[2]/wL[0]*vnorm[0] + (wL[2]*wL[2]/wL[0] + wL[0]*wL[0])*vnorm[1] 
+   		   + wR[1]*wR[2]/wR[0]*vnorm[0] + (wR[2]*wR[2]/wR[0] + wR[0]*wR[0])*vnorm[1])/2 
+		   - lambda_max*(wR[2]-wL[2])   ;
 
+   flux[3] = ((wL[1]*wL[3]/wL[0] + wL[0]*wL[0]*wL[1]/wL[0])*vnorm[0] + (wL[2]*wL[3]/wL[0] + wL[0]*wL[0]*wL[1]/wL[0])*vnorm[1]
+   		   + (wR[1]*wR[3]/wR[0] + wR[0]*wR[0]*wR[1]/wR[0])*vnorm[0] + (wR[2]*wR[3]/wR[0] + wR[0]*wR[0]*wR[1]/wR[0])*vnorm[1])/2
+		   - lambda_max*(wR[3]-wL[3])   ;
 };
 
 void EulerBoundaryFlux(double x[3],double t,double wL[],double* vnorm,
@@ -100,48 +101,38 @@ void EulerInitData2d(double x[3],double w[]){
 
 };
 
+void riemann (double * wL, double * wR, double xi, double * w) {
+	doublereal rL,uL,vL,pL,rR,uR,vR,pR,r,u,v,p,y,um ;
+	rL=wL[0] ;
+	uL=wL[1]/rL ;
+	vL=wL[2]/rL ;
+	pL=(wL[3]-0.5*(wL[0]*wL[1]+wL[0]*wL[2]))*(GAMMA-1) ;
+
+	rR=wR[0] ;
+	uR=wR[1]/rR ;
+	vR=wR[2]/rR ;
+	pR=(wR[3]-0.5*(wR[0]*wR[1]+wR[0]*wR[2]))*(GAMMA-1) ;
+
+	//riemann77_(&rL,&uL,&pL,&rR,&uR,&pR,&xi,&r,&u,&p,&um) ;
+
+	if (um > xi) 
+		v=vL ;
+	else 
+		v=vR ;
+	w[0]=r ;
+	w[1]=r*u ; 
+	w[2]=r*v ;
+	w[3]=p/(GAMMA-1)+0.5*r*(u*u+v*v) ;
+}
 
 void EulerImposedData(double x[3],double t,double w[]){
-  //xi = x[0]/t ;
-  //wL = ...
-  //wR = ...
-  //call riemann (wL,wR,xi, w) 
-	
-  double vx =
-    Euler_v[0] * x[0] +
-    Euler_v[1] * x[1] +
-    Euler_v[2] * x[2];
-
-  double xx = vx - t;
-
-  //w[0]=cos(xx);
-  w[0] = 5. ;
-  w[1] = 5. ;
-  w[2] = 5. ;
-  w[3] = 5. ;
+  double xi = x[0]/t ;
+  riemann (WL, WR, xi, w) ;
 };
 
 void EulerImposedData2d(double x[3],double t,double w[]){
-
-  double vx =
-    Euler_v2d[0] * x[0] +
-    Euler_v2d[1] * x[1] +
-    Euler_v2d[2] * x[2];
-
-  double xx = vx - t;
-
-  //w[0]=cos(xx);
-  /*
-  w[0] = 1. ;
-  w[1] = 0. ;
-  w[2] = 0. ;
-  w[3] = 1./0.4 ;
-  */
-  w[0] = 1. ;
-  w[1] = 1. ;
-  w[2] = 1. ;
-  w[3] = 1. ;
-
+  double xi = x[0]/t ;
+  riemann (WL, WR, xi, w) ;
 };
 
 void TestEulerBoundaryFlux(double x[3],double t,double wL[],double* vnorm,

@@ -42,6 +42,7 @@ src/euler.c
 src/shallow.c
 src/stvenantlin.c
 src/gasdyn77.c
+src/gasdyn77.h
 src/f2c.h
 )
 

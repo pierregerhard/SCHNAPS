@@ -4,6 +4,8 @@
 #include "test.h"
 #include "euler.h"
 #include "field.h"
+#include "f2c.h"
+#include "gasdyn77.h"
 
 #include <stdio.h>
 #include <math.h>
