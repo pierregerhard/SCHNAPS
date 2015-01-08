@@ -4,7 +4,6 @@
 #include "test.h"
 #include "stvenantlin.h"
 #include "field.h"
-
 #include <stdio.h>
 #include <math.h>
 #include <assert.h>
@@ -16,8 +15,8 @@ int main(void) {
   int resu=TestStvenantFp();
 	 
 
-  if (resu) printf("Model test OK !\n");
-  else printf("Model test failed !\n");
+  if (resu) printf("St venant test OK !\n");
+  else printf("St venant test failed !\n");
 
   return !resu;
 } 
