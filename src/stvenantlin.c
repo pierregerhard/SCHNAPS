@@ -51,7 +51,6 @@ flux[0]=(1./2)*(vnorm[0]*wL[1]    + vnorm[1]*wL[2]    + vnorm[0]*wR[1] + vnorm[1
 flux[1]=(1./2)*(const_g*H0*wL[0]  + const_g*H0*wR[0])*vnorm[0] - (lambda/2)*(wR[1] - wL[1]) ;
 flux[2]=(1./2)*(const_g*H0*wL[0]  + const_g*H0*wR[0])*vnorm[1] - (lambda/2)*(wR[2] - wL[2]) ;
 
-
 //essai flux de Godunov
 /*
 double fluxAP[3];
